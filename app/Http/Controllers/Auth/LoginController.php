@@ -18,7 +18,10 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->register = new RegisterController();
     }
-    
+    public function index(){
+        return view('auth.login');
+    }
+
     public function authenticate(Request $request)
     {
         $credentials = $request->only('name', 'password');
@@ -27,10 +30,14 @@ class LoginController extends Controller
             return redirect()->intended('dashboard');
         }
     }
+
+    public function registerGet(){
+        return view('auth.register');
+    }
     public function register(Request $request){
         
         $data = $this->register->create($request);
-
+        
         $credentials = $request->only('name', 'password');
         
         if (Auth::attempt($credentials)) {
