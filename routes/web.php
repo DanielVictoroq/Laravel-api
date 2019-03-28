@@ -16,10 +16,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/logout', function(){
-    Auth::logout();
-    return redirect('home');
+Route::group(['middleware' => ['auth']], function () { 
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/logout','HomeController@logout')->name('logout');
+    Route::get('/jobsGet', 'BaseController@JobsGetAll')->name('job');
 });
