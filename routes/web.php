@@ -14,8 +14,13 @@ Route::group(['prefix' => 'register'], function() {
     Route::post('/', 'Auth\LoginController@register')->name('register');
 });
 
+Route::group(['prefix' => 'forgot-password'], function() {
+    Route::get('/', 'Auth\LoginController@forgotGet')->name('register');
+    Route::post('/', 'Auth\LoginController@forgot')->name('register');
+});
+
 Route::group(['middleware' => ['auth']], function () { 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/logout','HomeController@logout')->name('logout');
+    Route::get('/logout','Auth\LoginController@logout')->name('logout');
     Route::get('/jobsGet', 'BaseController@JobsGetAll');
 });

@@ -21,19 +21,28 @@ class LoginController extends Controller
     public function index(){
         return view('auth.login');
     }
-
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->only('name', 'password');
-        
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard');
-        }
-    }
-
+    
     public function registerGet(){
         return view('auth.register');
     }
+
+    public function forgotGet(){
+        return view('auth.register');
+    }
+
+    public function authenticate(Request $request)
+    {
+        $remember = $request->only('remember');
+        $credentials = $request->only('name', 'password');
+        
+        if (Auth::attempt($credentials, $remember)) {
+            return redirect()->intended('home');
+        }
+        else{
+            return redirect()->intended('home');
+        }
+    }
+    
     public function register(Request $request){
         
         $data = $this->register->create($request);
@@ -41,10 +50,20 @@ class LoginController extends Controller
         $credentials = $request->only('name', 'password');
         
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard');
+            return redirect()->intended('home');
         }
         else{
-            return 'error';
+            return view('auth.home');
         }
+    }
+    
+    public function forgot(){
+        Auth::logout();
+        return redirect('home');
+    }
+    
+    public function logout(){
+        Auth::logout();
+        return redirect('home');
     }
 }
