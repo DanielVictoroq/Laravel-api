@@ -27,7 +27,7 @@ class LoginController extends Controller
     }
 
     public function forgotGet(){
-        return view('auth.register');
+        return view('auth.passwords.reset');
     }
 
     public function authenticate(Request $request)
