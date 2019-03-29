@@ -15,8 +15,8 @@ Route::group(['prefix' => 'register'], function() {
 });
 
 Route::group(['prefix' => 'forgot-password'], function() {
-    Route::get('/', 'Auth\LoginController@forgotGet')->name('register');
-    Route::post('/', 'Auth\LoginController@forgot')->name('register');
+    Route::get('/', 'Auth\LoginController@forgotGet')->name('forgot');
+    Route::post('/', 'Auth\LoginController@forgot')->name('forgot');
 });
 
 Route::group(['middleware' => ['auth']], function () { 
