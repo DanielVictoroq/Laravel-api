@@ -18,26 +18,52 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->register = new RegisterController();
     }
+    public function index(){
+        return view('auth.login');
+    }
     
+    public function registerGet(){
+        return view('auth.register');
+    }
+
+    public function forgotGet(){
+        return view('auth.register');
+    }
+
     public function authenticate(Request $request)
     {
+        $remember = $request->only('remember');
         $credentials = $request->only('name', 'password');
         
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard');
+        if (Auth::attempt($credentials, $remember)) {
+            return redirect()->intended('home');
+        }
+        else{
+            return redirect()->intended('home');
         }
     }
+    
     public function register(Request $request){
         
         $data = $this->register->create($request);
-
+        
         $credentials = $request->only('name', 'password');
         
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard');
+            return redirect()->intended('home');
         }
         else{
-            return 'error';
+            return view('auth.home');
         }
+    }
+    
+    public function forgot(){
+        Auth::logout();
+        return redirect('home');
+    }
+    
+    public function logout(){
+        Auth::logout();
+        return redirect('home');
     }
 }
