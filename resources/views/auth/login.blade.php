@@ -8,14 +8,14 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form method="POST" action="{{route('login')}}">
                         @csrf
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                            <label for="name" class="col-md-4 col-form-label text-md-right">Usuário</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                                <input id="name" type="name" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="name" value="" required autofocus>
 
                                 @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
@@ -57,8 +57,8 @@
                                     {{ __('Login') }}
                                 </button>
 
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                @if (Route::has('forgot'))
+                                    <a class="btn btn-link" href="{{ route('forgot') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

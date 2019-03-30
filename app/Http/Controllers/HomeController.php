@@ -3,27 +3,32 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\JobsController;
 class HomeController extends Controller
 {
-    /**
-    * Create a new controller instance.
-    *
-    * @return void
-    */
-    
-    /**
-    * Show the application dashboard.
-    *
-    * @return \Illuminate\Contracts\Support\Renderable
-    */
+
+    private $jobs;
+
+    public function __construct(JobsController $jobs){
+        $this->jobs = $jobs;
+    }
     public function index()
     {
-        return view('welcome');
+        return view('home');
+    }
+    
+    public function tabelafu(){
+        $jobs = $this->jobs->index();
+        $jobs = $jobs->getData();
+        return view('tabela', ['jobs' => $jobs]);
     }
 
-    public function logout(){
-        Auth::logout();
-        return redirect('home');
+    public function inserirJobs(Request $request){
+        
+        $jobs = $this->jobs->store($request);
+        return redirect('tabela');  
+    }
+    public function criarJob(Request $request){
+        return view('job');
     }
 }

@@ -1,23 +1,29 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::group(['prefix' => 'login'], function() {
+    Route::get('/','Auth\LoginController@index')->name('login');
+    Route::post('/', 'Auth\LoginController@authenticate')->name('login');
+});
+
+Route::group(['prefix' => 'register'], function() {
+    Route::get('/', 'Auth\LoginController@registerGet')->name('register');
+    Route::post('/', 'Auth\LoginController@register')->name('register');
+});
+
+Route::group(['prefix' => 'forgot-password'], function() {
+    Route::get('/', 'Auth\LoginController@forgotGet')->name('forgot');
+    Route::post('/', 'Auth\LoginController@forgot')->name('forgot');
 });
 
 Route::group(['middleware' => ['auth']], function () { 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/logout','HomeController@logout')->name('logout');
-    Route::get('/jobsGet', 'BaseController@JobsGetAll')->name('job');
+    Route::get('/tabela', 'HomeController@tabelafu')->name('tabela');
+    Route::get('/criar', 'HomeController@criarJob')->name('criarJob');
+    Route::post('/job', 'HomeController@inserirJobs')->name('criarJob');
+    Route::get('/logout','Auth\LoginController@logout')->name('logout');
+    Route::get('/jobsGet', 'BaseController@JobsGetAll');
 });

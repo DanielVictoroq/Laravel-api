@@ -26,7 +26,7 @@ class JobsController extends Controller
         return response()->json($job);
     }
     
-    public function store(Request $request)
+    public function store($request)
     {
         $job = new Job();
         $job->fill($request->all());
