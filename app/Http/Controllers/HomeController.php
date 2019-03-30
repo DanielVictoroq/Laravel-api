@@ -22,4 +22,13 @@ class HomeController extends Controller
         $jobs = $jobs->getData();
         return view('tabela', ['jobs' => $jobs]);
     }
+
+    public function inserirJobs(Request $request){
+        
+        $jobs = $this->jobs->store($request);
+        return redirect('tabela');  
+    }
+    public function criarJob(Request $request){
+        return view('job');
+    }
 }

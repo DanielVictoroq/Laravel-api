@@ -22,6 +22,8 @@ Route::group(['prefix' => 'forgot-password'], function() {
 Route::group(['middleware' => ['auth']], function () { 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/tabela', 'HomeController@tabelafu')->name('tabela');
+    Route::get('/criar', 'HomeController@criarJob')->name('criarJob');
+    Route::post('/job', 'HomeController@inserirJobs')->name('criarJob');
     Route::get('/logout','Auth\LoginController@logout')->name('logout');
     Route::get('/jobsGet', 'BaseController@JobsGetAll');
 });
