@@ -18,6 +18,7 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->register = new RegisterController();
     }
+
     public function index(){
         return view('auth.login');
     }
@@ -36,7 +37,7 @@ class LoginController extends Controller
         $credentials = $request->only('name', 'password');
         
         if (Auth::attempt($credentials, $remember)) {
-            return redirect()->intended('home');
+            return redirect('tabela');
         }
         else{
             return redirect()->intended('home');
@@ -58,7 +59,7 @@ class LoginController extends Controller
     }
     
     public function forgot(){
-        Auth::logout();
+        
         return redirect('home');
     }
     

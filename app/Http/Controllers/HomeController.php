@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\JobsController;
 class HomeController extends Controller
 {
-
+    
     private $jobs;
-
+    
     public function __construct(JobsController $jobs){
         $this->jobs = $jobs;
     }
@@ -20,9 +20,10 @@ class HomeController extends Controller
     public function tabelafu(){
         $jobs = $this->jobs->index();
         $jobs = $jobs->getData();
-        return view('tabela', ['jobs' => $jobs]);
-    }
 
+        return view('tabela', ['jobs' => $jobs ]);
+    }
+    
     public function inserirJobs(Request $request){
         
         $jobs = $this->jobs->store($request);
@@ -30,5 +31,12 @@ class HomeController extends Controller
     }
     public function criarJob(Request $request){
         return view('job');
+    }
+    
+    public function excluirJob(Request $request){
+        $id = $request->input('id');
+        $ret = $this->jobs->destroy($id);
+
+        return redirect('tabela'); 
     }
 }
