@@ -8,7 +8,6 @@ use App\Http\Controllers\Auth;
 
 class BaseController extends Controller
 {
-    
     public function JobsGetAll(JobsController $jobs){
         return $jobs->index();
     }

@@ -24,6 +24,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/tabela', 'HomeController@tabelafu')->name('tabela');
     Route::get('/criar', 'HomeController@criarJob')->name('criarJob');
     Route::post('/job', 'HomeController@inserirJobs')->name('criarJob');
+    Route::post('/excluir-job', 'HomeController@excluirJob')->name('excluirJob');
     Route::get('/logout','Auth\LoginController@logout')->name('logout');
     Route::get('/jobsGet', 'BaseController@JobsGetAll');
 });
