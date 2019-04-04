@@ -3,7 +3,6 @@
 @section('content')
 
 <section class="container">
-    
     <table class="table">
         <thead>
             <tr>
@@ -12,7 +11,7 @@
                 <th scope="col">Description</th>
                 <th scope="col">Local</th>
                 <th scope="col">Compania</th>
-                <th scope="col">Exluir</th>
+                <th scope="col">Excluir</th>
             </tr>
         </thead>
         
@@ -35,6 +34,7 @@
                         </div>
                     </div>
                 </td>
+                @if(Session::get('admin') == true)
                 <td>
                     <form action="{{route('excluirJob')}}" method="POST">
                         @csrf
@@ -42,6 +42,9 @@
                         <button type="submit" class="btn btn-danger">Excluir</button>
                     </form>
                 </td>
+                @else
+                <td></td>
+                @endif
             </tr>
         </tbody>
         @endforeach

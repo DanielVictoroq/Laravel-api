@@ -15,7 +15,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
-    }
+    }    
     
     public function tabelafu(){
         $jobs = $this->jobs->index();
@@ -25,8 +25,8 @@ class HomeController extends Controller
     }
     
     public function inserirJobs(Request $request){
-        
         $jobs = $this->jobs->store($request);
+
         return redirect('tabela');  
     }
     public function criarJob(Request $request){
