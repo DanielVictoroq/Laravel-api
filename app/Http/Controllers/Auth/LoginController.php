@@ -15,33 +15,38 @@ class LoginController extends Controller
     
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
         $this->register = new RegisterController();
     }
-
+    
     public function index(){
         return view('auth.login');
     }
     
     public function registerGet(){
-        return view('auth.register');
-    }
+        
+        return view('auth.register',['user'=> 'register']);
 
+    }
+    
     public function forgotGet(){
         return view('auth.passwords.reset');
     }
-
+    
     public function authenticate(Request $request)
     {
         $remember = $request->only('remember');
         $credentials = $request->only('name', 'password');
         
-        if (Auth::attempt($credentials, $remember)) {
-            return redirect('tabela');
+        if(Auth::guard('admin')->attempt($credentials)){
+            \Session::put('admin', true);
+            return redirect()->route('home');
         }
-        else{
-            return redirect()->intended('home');
+        else if (Auth::attempt($credentials, $remember)) {
+            \Session::put('admin', false);
+            return redirect('/');
         }
+        
+        return redirect()->intended('home');
     }
     
     public function register(Request $request){
@@ -51,10 +56,11 @@ class LoginController extends Controller
         $credentials = $request->only('name', 'password');
         
         if (Auth::attempt($credentials)) {
+            \Session::put('admin', false);
             return redirect()->intended('home');
         }
         else{
-            return view('auth.home');
+            return view('home');
         }
     }
     
@@ -65,6 +71,8 @@ class LoginController extends Controller
     
     public function logout(){
         Auth::logout();
-        return redirect('home');
+        Auth::guard('admin')->logout();
+        \Session::flush();
+        return redirect('/');
     }
 }

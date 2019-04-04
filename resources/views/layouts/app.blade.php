@@ -10,17 +10,32 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
+<script>
+    var baseurl =  "{{ env('APP_URL') }}";
+</script>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
+                @if (Session::get('admin') == true)
+                <a class="navbar-brand" href="{{route('home')}}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                @else
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                @endif
                 @guest
                 @else
+                
+                @if (Session::get('admin') == true)
+                <a class="navbar-brand" href="{{route('tabelaAdmin')}}">Tabela</a>
+                <a class="navbar-brand" href="{{route('criarJob')}}">Criar Job</a>
+                @else
                 <a class="navbar-brand" href="{{route('tabela')}}">Tabela</a>
-                <a class="navbar-brand" href="{{url('criar')}}">Criar Job</a>
+                @endif
+                
                 @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -45,26 +60,32 @@
                             </a>
                             
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            
-                            <form id="logout-form" action="{{  route('logout') }}" method="GET" style="display: none;">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                    @endguest
-                </ul>
+                                @if (Session::get('admin') == true)
+                                <a class="dropdown-item" href="{{route('adminRegister')}}">Registrar Admin</a>
+                                <a class="dropdown-item" href="{{route('registerUser')}}">Registrar Usuário</a>
+                                
+                                <form id="logout-form" action="{{  route('logoutAdmin') }}" method="GET" style="display: none;">
+                                    @csrf
+                                </form>
+                                @else
+                                <form id="logout-form" action="{{  route('logout') }}" method="GET" style="display: none;">
+                                    @csrf
+                                </form>
+                                @endif
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}
+                                </a>
+                            </div>
+                        </li>
+                        @endguest
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
-    
-    <main class="py-4">
-        @yield('content')
-    </main>
-</div>
+        </nav>
+        
+        <main class="py-4">
+            @yield('content')
+        </main>
+        
+    </div>
 </body>
 </html>

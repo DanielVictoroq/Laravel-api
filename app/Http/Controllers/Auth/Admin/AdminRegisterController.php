@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Auth\Admin;
 
-use App\User;
+use App\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
-class RegisterController extends Controller
+class AdminRegisterController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -49,7 +49,8 @@ class RegisterController extends Controller
     
     public function create($data)
     {
-        return User::create([
+
+        return Admin::create([
             'name' => $data->name,
             'email' => $data->email,
             'password' => Hash::make($data->password),
