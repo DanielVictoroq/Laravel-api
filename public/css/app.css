@@ -10660,3 +10660,15 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.tr {
+  line-height: 4;
+}
+
+.tr td .dropdown-menu {
+  line-height: 2;
+}
+
+.tr td button:focus {
+  box-shadow: none;
+}
+

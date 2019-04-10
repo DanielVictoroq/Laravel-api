@@ -8,7 +8,8 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+
+                    <form id="formRegistro" method="POST" action="{{ route("$user") }}">
                         @csrf
 
                         <div class="form-group row">
@@ -73,5 +74,23 @@
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="modalsucesso" tabindex="-1" role="dialog" aria-labelledby="modalsucesso" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalsucesso">Sucesso</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Sucesso
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-success fechar-modal" data-dismiss="modal" aria-label="Fechar">Ir para Home</button>
+      </div>
+    </div>
+  </div>
 </div>
 @endsection
