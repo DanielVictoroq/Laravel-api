@@ -15,7 +15,7 @@ class UsuarioController extends Controller
         $usuario = [
             "nome" => $request->input('nome'),
             "sobrenome" => $request->input('sobrenome'),
-            "id_tipo" => $request->input('tipo'),
+            "id_tipo" => 'M',
             "data_nascimento" => $request->input('date'),
             "telefone" => $request->input('fone'),
             "nome_usuario" => $request->input('nome_usuario'),
@@ -25,22 +25,23 @@ class UsuarioController extends Controller
         ];
         
         $credentials = $request->only('nome_usuario', 'password');
-        
-        if(Auth::guard('admin')->attempt($credentials) || Auth::attempt($credentials)) {
-            return false;
-        }
-        
-        $data = $this->create($usuario);
-        dd($data);
-        if (Auth::attempt($credentials)) {
-            \Session::put('admin', false);
-            return redirect()->intended('home');
-        }
-        else{
-            return view('pages.home');
-        }
-    }
+        $remember = $request->only('remember');
 
+        $result = User::find($usuario['nome_usuario']);
+
+        if($result) {
+            return json_encode(false);
+        }
+
+        $data = $this->create($usuario);
+        
+        return json_encode($data);
+    }
+    
+    public function user(){
+
+        return json_encode(Usuario::all());
+    }
     public function validator($data)
     {
         return Validator::make($data, 
@@ -57,14 +58,16 @@ class UsuarioController extends Controller
         $retorno = $this->validator($data);
         
         if($retorno){
-
+            
             User::create([
                 'nome_usuario' => $data['nome_usuario'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 ]
             );
-            Usuario::store([
+            
+            $usuario = new Usuario();
+            $usuario->fill([
                 'nome_usuario' => $data['nome_usuario'],
                 'nome' => $data['nome'],
                 'sobrenome' => $data['sobrenome'],
@@ -72,12 +75,12 @@ class UsuarioController extends Controller
                 'data_nascimento' => $data['data_nascimento'],
                 'telefone' => $data['telefone'],
                 'login' => $data['login'],
-                ]
-            );
-            
-        }
-        else{
-            return false;
+                ]);
+                $usuario->save();
+                return true;
+            }
+            else{
+                return false;
+            }
         }
     }
-}

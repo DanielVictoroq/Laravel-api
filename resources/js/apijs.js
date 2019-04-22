@@ -17,12 +17,15 @@ $(document).ready(function(){
             url: baseurl + 'register/post',
             data: data,
             method: 'POST',
+            dataType: 'json',
             success: function (data) {
                 if(data){
+                    $('.modal-title').text('Sucesso');
                     $('#modalsucesso').modal('show');
                 }
                 else{
-                    $('#modalsucesso').modal('hide');
+                    $('.modal-title').text('Nome de Usuário já existe');
+                    $('#modalsucesso').modal('show');
                 }
             }
         });

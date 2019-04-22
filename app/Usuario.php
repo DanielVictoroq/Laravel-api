@@ -16,4 +16,10 @@ class Usuario extends Model
 
     protected $primaryKey = 'nome_usuario';
 
+    function user() {
+        return $this->belongsTo('App\User');
+    }
+    function admin() {
+        return $this->belongsTo('App\Admin');
+    }
 }

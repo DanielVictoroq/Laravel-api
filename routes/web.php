@@ -12,6 +12,8 @@ Route::get('/',function(){
     }
 });
 
+Route::get('/usuario','UsuarioController@user');
+
 Route::group(['prefix' => 'login'], function() {
     Route::get('/','Auth\LoginController@index')->name('login');
     Route::post('/', 'Auth\LoginController@authenticate')->name('login');

@@ -50,7 +50,6 @@ class LoginController extends Controller
         return redirect()->intended('home');
     }
     
-    
     public function forgot(){
         
         return redirect('pages.home');
