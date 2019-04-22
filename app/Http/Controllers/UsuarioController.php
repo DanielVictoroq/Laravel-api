@@ -2,29 +2,36 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Usuario;
+use App\User;
 
 class UsuarioController extends Controller
 {
-    public function novo()
+    public function novo(Request $request)
     {
         $usuario = [
-            "nome" => $this->input->post('nome'),
-            "sobrenome" => $this->input->post('sobrenome'),
-            "id_tipo" => $this->input->post('tipo'),
-            "dataNascimento" => $this->input->post('date'),
-            "telefone" => $this->input->post('fone'),
-            "nome_usuario" => $this->input->post('nome_usuario')
+            "nome" => $request->input('nome'),
+            "sobrenome" => $request->input('sobrenome'),
+            "id_tipo" => $request->input('tipo'),
+            "data_nascimento" => $request->input('date'),
+            "telefone" => $request->input('fone'),
+            "nome_usuario" => $request->input('nome_usuario'),
+            "login" => $request->input('nome_usuario'),
+            "email" => $request->input('email'),
+            "password" => $request->input('password'),
         ];
         
         $credentials = $request->only('nome_usuario', 'password');
         
-        if(Auth::guard('admin')->attempt($credentials) || Auth::attempt($credentials, $remember)) {
+        if(Auth::guard('admin')->attempt($credentials) || Auth::attempt($credentials)) {
             return false;
         }
         
-        $data = $this->register->create($credentials);
-    
+        $data = $this->create($usuario);
+        dd($data);
         if (Auth::attempt($credentials)) {
             \Session::put('admin', false);
             return redirect()->intended('home');
@@ -48,14 +55,26 @@ class UsuarioController extends Controller
     public function create($data)
     {
         $retorno = $this->validator($data);
-
+        
         if($retorno){
-            return User::create([
-                'nome_usuario' => $data->nome_usuario,
-                'email' => $data->email,
-                'password' => Hash::make($data->password),
+
+            User::create([
+                'nome_usuario' => $data['nome_usuario'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
                 ]
             );
+            Usuario::store([
+                'nome_usuario' => $data['nome_usuario'],
+                'nome' => $data['nome'],
+                'sobrenome' => $data['sobrenome'],
+                'id_tipo' => $data['id_tipo'],
+                'data_nascimento' => $data['data_nascimento'],
+                'telefone' => $data['telefone'],
+                'login' => $data['login'],
+                ]
+            );
+            
         }
         else{
             return false;

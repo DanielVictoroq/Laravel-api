@@ -4,11 +4,13 @@ Route::get('/',function(){
     if(Auth::guard('admin')->check() ){
        return redirect()->route('home');
     }
-    else{
+    else if (Auth::check()){
         return view('pages.home');
     }
+    else{
+        return redirect('/login');
+    }
 });
-
 
 Route::group(['prefix' => 'login'], function() {
     Route::get('/','Auth\LoginController@index')->name('login');
@@ -17,7 +19,7 @@ Route::group(['prefix' => 'login'], function() {
 
 Route::group(['prefix' => 'register'], function() {
     Route::get('/', 'Auth\LoginController@registerGet')->name('register');
-    Route::post('/post', 'Auth\LoginController@registerPost')->name('register/post');
+    Route::post('/post', 'UsuarioController@novo')->name('register/post');
 });
 
 Route::group(['prefix' => 'forgot-password'], function() {
@@ -36,4 +38,3 @@ Route::group(['middleware' => ['auth:admin']], function () {
 
 
 Route::get('/logout','Auth\LoginController@logout')->name('logout');
-Route::get('/usuarios','Auth\Admin\AdminController@retornoUsuarios');

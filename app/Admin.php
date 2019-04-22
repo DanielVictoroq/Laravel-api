@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\Admin as Authenticatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Authenticatable
@@ -17,6 +17,7 @@ class Admin extends Authenticatable
     protected $fillable = [
         'nome_usuario', 'email', 'password',
     ];
+    public $incrementing = false;
     
     protected $primaryKey = 'nome_usuario';
     

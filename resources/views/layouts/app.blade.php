@@ -17,15 +17,10 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                @if (Session::get('admin') == true)
-                <a class="navbar-brand" href="{{route('home')}}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                @else
+
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    Sistema de Condomínio
                 </a>
-                @endif
                 @guest
                 @else
                 
@@ -46,7 +41,7 @@
                         </li>
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ url('register') }}">Registrar</a>
                         </li>
                         @endif
                         @else

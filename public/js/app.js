@@ -49011,7 +49011,11 @@ $(document).ready(function () {
       nome_usuario: $('#nome_usuario').val(),
       email: $('#email').val(),
       password: $('#password').val(),
-      password_confirmation: $('#password-confirm').val()
+      nome: $('#nome').val(),
+      sobrenome: $('#sobrenome').val(),
+      date: $('#date').val(),
+      fone: $('#fone').val(),
+      tipo: $('#tipo').val()
     };
     $.ajax({
       headers: {

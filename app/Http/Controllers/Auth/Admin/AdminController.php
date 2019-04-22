@@ -52,7 +52,7 @@ class AdminController extends Controller
         
     }
     public function retornoUsuarios(){
-        $retorno = User::all();
+        $retorno = Admin::all();
         return response()->json($retorno);
     }
 }

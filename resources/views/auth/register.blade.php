@@ -3,22 +3,22 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-8 mt-4">
             <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+                <div class="card-header">Registro de Morador</div>
                 
                 <div class="card-body">
                     <form id="formRegistro" method="POST" action="https://devel8.dialhost.com.br/projetos/laravel-api/public/register/post">
                         @csrf
-                        <input type="text" name="nome_usuario" id = "nome_usuario" class="form-control" placeholder="Nome de Usuário">
-                        <input type="password" name="password" id = "password" class="form-control"  placeholder="Senha">
-                        <input type="email" name="email" id = "email" class="form-control" placeholder="E-mail">
-                        <input type="text" name="nome" id = "nome" class="form-control" placeholder="Nome">
-                        <input type="text" name="sobrenome" id = "sobrenome" class="form-control" placeholder="Sobrenome">
-                        <input type="text" name="tipo" id = "tipo" class="form-control" placeholder="Tipo Usuário">
-                        <input type="date" name="date" id = "date" class="form-control" placeholder="Data de Nascimento">
-                        <input type="text" name="fone" id = "fone" class="form-control" placeholder="Telefone">
-                        <button class = "btn btn-primary mt-4 col-md-3" type="submit">Cadastrar</button>
+                        <input type="text" name="nome_usuario" id = "nome_usuario" class="form-control mb-2" placeholder="Nome de Usuário">
+                        <input type="password" name="password" id = "password" class="form-control mb-2"  placeholder="Senha">
+                        <input type="email" name="email" id = "email" class="form-control mb-2" placeholder="E-mail">
+                        <input type="text" name="nome" id = "nome" class="form-control mb-2" placeholder="Nome">
+                        <input type="text" name="sobrenome" id = "sobrenome" class="form-control mb-2" placeholder="Sobrenome">
+                        <input type="text" name="tipo" id = "tipo" class="form-control mb-2" placeholder="Tipo Usuário (S ou M)">
+                        <input type="date" name="date" id = "date" class="form-control mb-2" placeholder="Data de Nascimento">
+                        <input type="text" name="fone" id = "fone" class="form-control mb-2" placeholder="Telefone">
+                        <button class = "btn btn-success mt-4 col-md-3" type="submit">Cadastrar</button>
                     </form>
                 </div>
             </div>

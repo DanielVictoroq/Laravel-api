@@ -37,7 +37,7 @@ class LoginController extends Controller
     {
         $remember = $request->only('remember');
         $credentials = $request->only('nome_usuario', 'password');
-        dd(Auth::guard('admin')->attempt($credentials));
+    
         if(Auth::guard('admin')->attempt($credentials)){
             \Session::put('admin', true);
             return redirect()->route('home');
