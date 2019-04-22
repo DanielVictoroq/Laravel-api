@@ -13,6 +13,7 @@ class LoginController extends Controller
 {
     private $register;
     
+
     public function __construct()
     {
         $this->register = new RegisterController();
@@ -24,7 +25,7 @@ class LoginController extends Controller
     
     public function registerGet(){
         
-        return view('auth.register',['user'=> 'register']);
+        return view('auth.register',['user'=> 'register/post']);
 
     }
     
@@ -35,8 +36,8 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $remember = $request->only('remember');
-        $credentials = $request->only('name', 'password');
-        
+        $credentials = $request->only('nome_usuario', 'password');
+        dd(Auth::guard('admin')->attempt($credentials));
         if(Auth::guard('admin')->attempt($credentials)){
             \Session::put('admin', true);
             return redirect()->route('home');
@@ -49,24 +50,10 @@ class LoginController extends Controller
         return redirect()->intended('home');
     }
     
-    public function register(Request $request){
-        
-        $data = $this->register->create($request);
-        
-        $credentials = $request->only('name', 'password');
-        
-        if (Auth::attempt($credentials)) {
-            \Session::put('admin', false);
-            return redirect()->intended('home');
-        }
-        else{
-            return view('home');
-        }
-    }
     
     public function forgot(){
         
-        return redirect('home');
+        return redirect('pages.home');
     }
     
     public function logout(){

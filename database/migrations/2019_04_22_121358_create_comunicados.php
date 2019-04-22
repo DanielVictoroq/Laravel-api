@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateComunicados extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->string('nome_usuario', 100);
-            $table->primary('nome_usuario');
-            $table->string('email', 100);
-            $table->string('password', 60);
-            $table->string('remember_token', 60);
+        Schema::create('comunicados', function (Blueprint $table) {
+            $table->bigIncrements('id_comunicado');
+            $table->string('comunicado', 255);
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('comunicados');
     }
 }

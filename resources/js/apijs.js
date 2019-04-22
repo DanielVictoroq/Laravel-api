@@ -3,7 +3,7 @@ $(document).ready(function(){
     $('#formRegistro').submit(function(e){
         e.preventDefault();
         var data = {
-            name: $('#name').val(),
+            nome_usuario: $('#nome_usuario').val(),
             email:$('#email').val(),
             password: $('#password').val(),
             password_confirmation: $('#password-confirm').val(),
@@ -11,7 +11,7 @@ $(document).ready(function(){
             };
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: baseurl + 'register-user',
+            url: baseurl + 'register/post',
             data: data,
             method: 'POST',
             success: function (data) {

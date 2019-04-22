@@ -5,9 +5,10 @@ Route::get('/',function(){
        return redirect()->route('home');
     }
     else{
-        return view('home');
+        return view('pages.home');
     }
 });
+
 
 Route::group(['prefix' => 'login'], function() {
     Route::get('/','Auth\LoginController@index')->name('login');
@@ -16,7 +17,7 @@ Route::group(['prefix' => 'login'], function() {
 
 Route::group(['prefix' => 'register'], function() {
     Route::get('/', 'Auth\LoginController@registerGet')->name('register');
-    Route::post('/', 'Auth\LoginController@register')->name('register');
+    Route::post('/post', 'Auth\LoginController@registerPost')->name('register/post');
 });
 
 Route::group(['prefix' => 'forgot-password'], function() {
@@ -26,20 +27,11 @@ Route::group(['prefix' => 'forgot-password'], function() {
 
 Route::group(['middleware' => ['auth:admin']], function () { 
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/tabela-admin', 'HomeController@tabelafu')->name('tabelaAdmin');
-    Route::get('/criar', 'HomeController@criarJob')->name('criarJob');
-    Route::post('/job', 'HomeController@inserirJobs')->name('criarJobPost');
-    Route::post('/excluir-job', 'HomeController@excluirJob')->name('excluirJob');
     Route::get('/logout-admin','Auth\LoginController@logout')->name('logoutAdmin');
-    Route::get('/jobsGet', 'BaseController@JobsGetAll');
     Route::get('/admin-reg', 'Auth\Admin\AdminController@indexLogin')->name('adminRegister');
     Route::post('/admin-reg', 'Auth\Admin\AdminController@register')->name('adminRegister');
     Route::get('/register-user', 'Auth\Admin\AdminController@registerGet')->name('registerUser');
     Route::post('/register-user', 'Auth\Admin\AdminController@registerUser')->name('registerUSer');
-});
-
-Route::group(['middleware' => ['auth']], function () { 
-    Route::get('/tabela', 'HomeController@tabelafu')->name('tabela');
 });
 
 

@@ -30,10 +30,6 @@
                 @else
                 
                 @if (Session::get('admin') == true)
-                <a class="navbar-brand" href="{{route('tabelaAdmin')}}">Tabela</a>
-                <a class="navbar-brand" href="{{route('criarJob')}}">Criar Job</a>
-                @else
-                <a class="navbar-brand" href="{{route('tabela')}}">Tabela</a>
                 @endif
                 
                 @endif
@@ -56,7 +52,7 @@
                         @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->nome_usuario }} <span class="caret"></span>
                             </a>
                             
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

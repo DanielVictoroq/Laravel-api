@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateOcorrencias extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('ocorrencias', function (Blueprint $table) {
+            $table->bigIncrements('id_ocorrencia');
+            $table->string('ocorrencia', 50);
             $table->string('nome_usuario', 100);
-            $table->primary('nome_usuario');
-            $table->string('email', 100);
-            $table->string('password', 60);
-            $table->string('remember_token', 60);
+            $table->foreign('nome_usuario')->references('nome_usuario')->on('usuario');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('ocorrencias');
     }
 }
