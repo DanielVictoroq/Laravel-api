@@ -1,18 +1,8 @@
 <?php
 
-Route::get('/',function(){
-    if(Auth::guard('admin')->check() ){
-       return redirect()->route('home');
-    }
-    else if (Auth::check()){
-        return view('pages.home');
-    }
-    else{
-        return redirect('/login');
-    }
-});
+Route::get('/','HomeController@index')->name('home');
 
-Route::get('/usuario','UsuarioController@user');
+Route::get('/usuario','HomeController@teste');
 
 Route::group(['prefix' => 'login'], function() {
     Route::get('/','Auth\LoginController@index')->name('login');
@@ -20,13 +10,13 @@ Route::group(['prefix' => 'login'], function() {
 });
 
 Route::group(['prefix' => 'register'], function() {
-    Route::get('/', 'Auth\LoginController@registerGet')->name('register');
+    Route::get('/', 'HomeController@registerGet')->name('register');
     Route::post('/post', 'UsuarioController@novo')->name('register/post');
 });
 
 Route::group(['prefix' => 'forgot-password'], function() {
-    Route::get('/', 'Auth\LoginController@forgotGet')->name('forgot');
-    Route::post('/', 'Auth\LoginController@forgot')->name('forgot');
+    Route::get('/', 'HomeController@forgotGet')->name('forgot');
+    Route::post('/', 'HomeController@forgot')->name('forgot');
 });
 
 Route::group(['middleware' => ['auth:admin']], function () { 

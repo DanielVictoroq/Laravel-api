@@ -25,7 +25,6 @@ class CreateCondominio extends Migration
             $table->float('vlr_caixa', 100);
             $table->string('sindico_atual', 100);
             $table->foreign('sindico_atual')->references('nome_usuario')->on('usuario');
-            $table->timestamps();
         });
     }
 

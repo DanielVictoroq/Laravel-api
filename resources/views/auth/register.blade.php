@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8 mt-4">
             <div class="card">
-                <div class="card-header">Registro de Morador</div>
+                <div class="card-header">Cadastro de Morador</div>
                 
                 <div class="card-body">
                     <form id="formRegistro" method="POST" action="https://devel8.dialhost.com.br/projetos/laravel-api/public/register/post">

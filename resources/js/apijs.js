@@ -1,5 +1,5 @@
 $(document).ready(function(){
-
+    
     $('#formRegistro').submit(function(e){
         e.preventDefault();
         var data = {
@@ -11,7 +11,7 @@ $(document).ready(function(){
             date: $('#date').val(),
             fone: $('#fone').val(),
             tipo: $('#tipo').val(),
-            };
+        };
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             url: baseurl + 'register/post',
@@ -29,9 +29,17 @@ $(document).ready(function(){
                 }
             }
         });
-
+        
     });
-
+    
+        if ($(window).width() < 426) {
+            $('.headermenu').addClass('nav-link');
+        }
+        else {
+            $('.headermenu').removeClass('nav-link');
+        }
+    
+    
     $('.fechar-modal').click(function(){
         window.location.href= baseurl+'home';
     });

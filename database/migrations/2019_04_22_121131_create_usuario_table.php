@@ -21,10 +21,9 @@ class CreateUsuarioTable extends Migration
             $table->string('id_tipo', 50);
             $table->date('data_nascimento');
             $table->string('telefone', 100);
-            $table->string('login', 100);
-            $table->foreign('login')->references('nome_usuario')->on('users');
-            $table->foreign('login')->references('nome_usuario')->on('admin');
-            $table->timestamps();
+            $table->string('usuario', 100);
+            $table->foreign('usuario')->references('nome_usuario')->on('users')->onDelete('cascade');
+            $table->foreign('usuario')->references('nome_usuario')->on('admin')->onDelete('cascade');
         });
     }
 

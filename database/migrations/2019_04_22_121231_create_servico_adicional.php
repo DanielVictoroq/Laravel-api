@@ -17,7 +17,6 @@ class CreateServicoAdicional extends Migration
             $table->bigIncrements('id_servico');
             $table->string('tipo_servico', 50);
             $table->string('descricao', 255);
-            $table->timestamps();
         });
     }
 

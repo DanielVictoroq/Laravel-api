@@ -1,0 +1,2 @@
+[22-Apr-2019 18:45:21 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 262144 bytes) in /home/devel8/public_html/projetos/laravel-api/vendor/laravel/framework/src/Illuminate/Database/DatabaseManager.php on line 102
+[22-Apr-2019 18:45:21 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 262144 bytes) in Unknown on line 0

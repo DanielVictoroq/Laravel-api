@@ -15,10 +15,10 @@ class CreateOcorrencias extends Migration
     {
         Schema::create('ocorrencias', function (Blueprint $table) {
             $table->bigIncrements('id_ocorrencia');
-            $table->string('ocorrencia', 50);
+            $table->longtext('ocorrencia');
+             $table->string('titulo', 100);
             $table->string('nome_usuario', 100);
             $table->foreign('nome_usuario')->references('nome_usuario')->on('usuario');
-            $table->timestamps();
         });
     }
 

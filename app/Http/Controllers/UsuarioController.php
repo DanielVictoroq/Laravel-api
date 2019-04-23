@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Usuario;
 use App\User;
+use App\Admin;
 
 class UsuarioController extends Controller
 {
@@ -19,29 +20,25 @@ class UsuarioController extends Controller
             "data_nascimento" => $request->input('date'),
             "telefone" => $request->input('fone'),
             "nome_usuario" => $request->input('nome_usuario'),
-            "login" => $request->input('nome_usuario'),
+            "usuario" => $request->input('nome_usuario'),
             "email" => $request->input('email'),
             "password" => $request->input('password'),
         ];
         
         $credentials = $request->only('nome_usuario', 'password');
         $remember = $request->only('remember');
-
+        
         $result = User::find($usuario['nome_usuario']);
-
+        
         if($result) {
             return json_encode(false);
         }
-
+        
         $data = $this->create($usuario);
         
         return json_encode($data);
     }
-    
-    public function user(){
 
-        return json_encode(Usuario::all());
-    }
     public function validator($data)
     {
         return Validator::make($data, 
@@ -74,13 +71,14 @@ class UsuarioController extends Controller
                 'id_tipo' => $data['id_tipo'],
                 'data_nascimento' => $data['data_nascimento'],
                 'telefone' => $data['telefone'],
-                'login' => $data['login'],
-                ]);
-                $usuario->save();
-                return true;
-            }
-            else{
-                return false;
-            }
+                'usuario' => $data['usuario'],
+                ]
+            );
+            $usuario->save();
+            return true;
+        }
+        else{
+            return false;
         }
     }
+}

@@ -51,7 +51,7 @@ class AdminRegisterController extends Controller
     {
 
         return Admin::create([
-            'nome_usuario' => $data->name,
+            'nome_usuario' => $data->nome_usuario,
             'email' => $data->email,
             'password' => Hash::make($data->password),
             ]

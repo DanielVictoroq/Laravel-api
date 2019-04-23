@@ -15,8 +15,8 @@ class CreateComunicados extends Migration
     {
         Schema::create('comunicados', function (Blueprint $table) {
             $table->bigIncrements('id_comunicado');
-            $table->string('comunicado', 255);
-            $table->timestamps();
+            $table->longtext('comunicado');
+            $table->string('titulo', 100);
         });
     }
 

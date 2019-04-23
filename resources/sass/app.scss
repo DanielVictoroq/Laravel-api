@@ -4,25 +4,17 @@
 
 // Variables
 @import 'variables';
+@import 'custom';
+@import 'home';
+@import 'login';
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
-}
+//fontawesome
 
-.tr{
-  line-height: 4;
-  td{
-    .dropdown-menu{
-      line-height: 2;
-    }
-    button{
-      &:focus{
-        box-shadow: none;
-      }
-    }
-  }
-}
+@import 'node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@import 'node_modules/@fortawesome/fontawesome-free/scss/brands';
+@import 'node_modules/@fortawesome/fontawesome-free/scss/solid';
+@import 'node_modules/@fortawesome/fontawesome-free/scss/regular';
+

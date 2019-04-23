@@ -18,7 +18,7 @@ class CreateSituacaoRevisao extends Migration
             $table->string('nome', 50);
             $table->date('ult_revisao');
             $table->date('data_prox_revisao');
-            $table->timestamps();
+
         });
     }
 

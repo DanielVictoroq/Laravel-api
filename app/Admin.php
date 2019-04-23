@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Authenticatable
 {
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+    * The attributes that are mass assignable.
+    *
+    * @var array
+    */
     protected $fillable = [
         'nome_usuario', 'email', 'password',
     ];
@@ -39,4 +39,14 @@ class Admin extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function usuario()
+    {
+        return $this->hasMany('App\Usuario','usuario');
+    }
+    
+    public function apartamento()
+    {
+        return $this->hasMany('App\Apartamento', 'responsavel');
+    }
 }
