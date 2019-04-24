@@ -20,7 +20,7 @@
                 <tr  class="text-center">
                     <th scope="row" >{{$item->titulo}}</th>
                     <td>{{$item->comunicado}}</td>
-                    <td ><i class="far fa-trash-alt fa-2x exc-recado"></i></td>
+                    <td ><a href="" class="text-danger exc-recado"><i class="far fa-trash-alt fa-2x "></i></a></td>
                 </tr>
                 @endforeach
                 @else
