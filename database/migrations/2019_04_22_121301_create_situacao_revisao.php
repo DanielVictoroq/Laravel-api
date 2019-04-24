@@ -7,26 +7,28 @@ use Illuminate\Database\Migrations\Migration;
 class CreateSituacaoRevisao extends Migration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    * Run the migrations.
+    *
+    * @return void
+    */
     public function up()
     {
         Schema::create('situacao_revisao', function (Blueprint $table) {
             $table->bigIncrements('id_situacao');
             $table->string('nome', 50);
             $table->date('ult_revisao');
+            $table->int('id_condominio', 10);
+            $table->foreign('id_condominio')->references('id_condominio')->on('condominio');
             $table->date('data_prox_revisao');
-
+            $table->timestamps(); 
         });
     }
-
+    
     /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    * Reverse the migrations.
+    *
+    * @return void
+    */
     public function down()
     {
         Schema::dropIfExists('situacao_revisao');

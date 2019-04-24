@@ -17,6 +17,7 @@
                         <input type="text" name="sobrenome" id = "sobrenome" class="form-control mb-2" placeholder="Sobrenome">
                         <input type="date" name="date" id = "date" class="form-control mb-2" placeholder="Data de Nascimento">
                         <input type="text" name="fone" id = "fone" class="form-control mb-2" placeholder="Telefone">
+                        <input type="text" name="n_apt" id = "n_apt" class="form-control mb-2" placeholder="Número do Apartamento">
                         <button class = "btn btn-success mt-4 col-md-3" type="submit">Cadastrar</button>
                     </form>
                 </div>

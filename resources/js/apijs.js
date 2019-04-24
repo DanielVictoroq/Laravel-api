@@ -11,6 +11,7 @@ $(document).ready(function(){
             date: $('#date').val(),
             fone: $('#fone').val(),
             tipo: $('#tipo').val(),
+            n_apt: $('#n_apt').val(),
         };
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -32,13 +33,32 @@ $(document).ready(function(){
         
     });
     
-        if ($(window).width() < 426) {
-            $('.headermenu').addClass('nav-link');
-        }
-        else {
-            $('.headermenu').removeClass('nav-link');
-        }
+    if ($(window).width() < 426) {
+        $('.headermenu').addClass('nav-link');
+    }
+    else {
+        $('.headermenu').removeClass('nav-link');
+    }
     
+    $('.concluir-sin').click(function(){
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            url: baseurl + 'sindico-post',
+            data: {sindico : $('#sindico').val()},
+            method: 'POST',
+            dataType: 'json',
+            success: function (data) {
+                if (data) {
+                    $('.modal-title').text('Sucesso');
+                    $('#modalsucesso').modal('show');
+                }
+                else {
+                    $('.modal-title').text('Nome de Usuário já existe');
+                    $('#modalsucesso').modal('show');
+                }
+            }
+        });
+    });
     
     $('.fechar-modal').click(function(){
         window.location.href= baseurl+'home';

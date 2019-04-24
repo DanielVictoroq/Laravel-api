@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->primary('nome_usuario');
             $table->string('email', 100);
             $table->string('password', 60);
-            $table->string('remember_token', 60);
+            $table->string('remember_token', 60)->default('1');
+            $table->timestamps();
         });
     }
 

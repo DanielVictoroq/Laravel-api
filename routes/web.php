@@ -1,8 +1,7 @@
 <?php
 
-Route::get('/','HomeController@index')->name('home');
 
-Route::get('/usuario','HomeController@teste');
+Route::get('/','HomeController@index')->name('home');
 
 Route::group(['prefix' => 'login'], function() {
     Route::get('/','Auth\LoginController@index')->name('login');
@@ -19,13 +18,17 @@ Route::group(['prefix' => 'forgot-password'], function() {
     Route::post('/', 'HomeController@forgot')->name('forgot');
 });
 
+Route::group(['middleware' => ['auth']], function () { 
+    Route::get('/predio', 'PredioController@index')->name('predio');
+    Route::get('/ocorrencias', 'PredioController@indexOcorrencias')->name('ocorrencias');
+    Route::get('/recados', 'PredioController@indexRecados')->name('recados');
+});
+
 Route::group(['middleware' => ['auth:admin']], function () { 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('homeadmin');
+    Route::get('/sindico', 'UsuarioController@getSindico')->name('getSindico');
     Route::get('/logout-admin','Auth\LoginController@logout')->name('logoutAdmin');
-    Route::get('/admin-reg', 'Auth\Admin\AdminController@indexLogin')->name('adminRegister');
-    Route::post('/admin-reg', 'Auth\Admin\AdminController@register')->name('adminRegister');
-    Route::get('/register-user', 'Auth\Admin\AdminController@registerGet')->name('registerUser');
-    Route::post('/register-user', 'Auth\Admin\AdminController@registerUser')->name('registerUSer');
+    Route::post('/sindico-post', 'UsuarioController@definirSindico')->name('Postsindico');
 });
 
 

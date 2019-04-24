@@ -34,7 +34,7 @@ class LoginController extends Controller
         
         if(Auth::guard('admin')->attempt($credentials)){
             $this->inserirSessao('admin');
-            return redirect()->route('home');
+            return redirect()->route('homeadmin');
         }
         else if (Auth::attempt($credentials, $remember)) {
             $this->inserirSessao('user');
@@ -45,19 +45,21 @@ class LoginController extends Controller
     }
     
     public function inserirSessao($opcao){
-
+        
         if($opcao == 'admin'){
+            $cred = Auth::guard('admin')->user();
             Session::put('admin', true);
-            $data =  json_decode(Admin::with('usuario')->get());
-            Session::put('dados_login',  $data[0]->usuario[0]);
+            $data = Usuario::find($cred->nome_usuario)->get();
+            Session::put('dados_login',  $data[0]);
         }
         else {
-            $data = json_decode(User::with('usuario')->get());
-            Session::put('dados_login', $data[0]->usuario[0]);
+            $cred = Auth::user();
+            $data = Usuario::find($cred->nome_usuario)->get();
+            Session::put('dados_login',  $data[0]);
             Session::put('admin', false);
         }
     }
-
+    
     
     public function logout(){
         Auth::logout();

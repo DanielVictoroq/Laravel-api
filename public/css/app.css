@@ -20,6 +20,16 @@ h5 {
   letter-spacing: 1px;
 }
 
+#sindico {
+  width: 250px;
+  height: 40px;
+  color: #555;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 0 10px;
+  letter-spacing: 1px;
+}
+
 .card.bg-primary {
   border: 1px solid #3490dc;
 }
@@ -34,6 +44,11 @@ h5 {
   color: #555555;
   border-bottom-right-radius: 3px;
   border-bottom-left-radius: 3px;
+}
+
+.card.nenhuma .card-body {
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
 }
 
 @media screen and (max-width: 426px) {
@@ -68,15 +83,21 @@ h5 {
   box-shadow: none;
 }
 
-.total {
+.total,
+.condominio {
   height: 30px;
   font-size: 1.2rem;
   font-weight: bold;
   letter-spacing: 1px;
 }
 
-.total p {
+.total p,
+.condominio p {
   margin: 0;
+}
+
+.condominio {
+  font-size: 1rem;
 }
 
 .footer-sistema {
@@ -112,6 +133,10 @@ h5 {
 
 .card .card-body.login {
   padding: 4rem 0;
+}
+
+.recado_div {
+  margin-top: 70px;
 }
 
 /*!

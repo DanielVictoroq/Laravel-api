@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Usuario;
 use App\User;
-use App\Admin;
+use App\Apartamento;
 
 class UsuarioController extends Controller
 {
@@ -23,10 +23,11 @@ class UsuarioController extends Controller
             "usuario" => $request->input('nome_usuario'),
             "email" => $request->input('email'),
             "password" => $request->input('password'),
+            "n_apt" => $request->input('n_apt'),
+            "remember" => $request->only('remember'),
         ];
         
         $credentials = $request->only('nome_usuario', 'password');
-        $remember = $request->only('remember');
         
         $result = User::find($usuario['nome_usuario']);
         
@@ -38,7 +39,34 @@ class UsuarioController extends Controller
         
         return json_encode($data);
     }
+    
+    public function getSindico(){
+        $data = Usuario::all();
+        $sindico = '';
+        foreach($data as $item)
+        {
+            if($item->id_tipo == 'S'){
+                $sindico = $item->nome.' '.$item->sobrenome;
+            }
+        }   
+        return view('admin.sindico', ['data' => json_decode($data), 'sindico' => $sindico]);
+        
+    }
+    public function definirSindico(Request $request){
 
+        $novo = $request->input('sindico');
+
+        $antsindico = Usuario::where('id_tipo', '=', 'S')->update(['id_tipo' => 'M']);
+
+        $novosindico = Usuario::find($novo);
+        $novosindico->id_tipo = 'S';
+        $novosindico->save();
+
+        return json_encode(true);
+
+    }
+    
+    
     public function validator($data)
     {
         return Validator::make($data, 
@@ -60,6 +88,7 @@ class UsuarioController extends Controller
                 'nome_usuario' => $data['nome_usuario'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
+                'remember' => null
                 ]
             );
             
@@ -75,6 +104,14 @@ class UsuarioController extends Controller
                 ]
             );
             $usuario->save();
+            
+            $apartamento = new Apartamento();
+            $apartamento->fill([
+                'responsavel' => $data['nome_usuario'],
+                'n_apt' => $data['n_apt'],
+                ]
+            );
+            $apartamento->save();
             return true;
         }
         else{

@@ -17,11 +17,11 @@ class CreateApartamentos extends Migration
             $table->integer('n_apt');
             $table->primary('n_apt');
             $table->string('responsavel', 100);
-            $table->float('vlr_agua', 100);
-            $table->float('vlr_gas', 100);
-            $table->float('med_agua', 100);
-            $table->float('med_gas', 100);
-            $table->float('vlr_total', 100);
+            $table->float('vlr_agua', 100)->default(0);
+            $table->float('vlr_gas', 100)->default(0);
+            $table->float('med_agua', 100)->default(0);
+            $table->float('med_gas', 100)->default(0);
+            $table->float('vlr_total', 100)->default(0);
             $table->foreign('responsavel')->references('nome_usuario')->on('usuario');
             $table->timestamps();
         });

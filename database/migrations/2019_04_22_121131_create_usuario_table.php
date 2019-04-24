@@ -7,10 +7,10 @@ use Illuminate\Database\Migrations\Migration;
 class CreateUsuarioTable extends Migration
 {
     /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    * Run the migrations.
+    *
+    * @return void
+    */
     public function up()
     {
         Schema::create('usuario', function (Blueprint $table) {
@@ -22,16 +22,19 @@ class CreateUsuarioTable extends Migration
             $table->date('data_nascimento');
             $table->string('telefone', 100);
             $table->string('usuario', 100);
+            $table->int('id_condominio', 10);
             $table->foreign('usuario')->references('nome_usuario')->on('users')->onDelete('cascade');
             $table->foreign('usuario')->references('nome_usuario')->on('admin')->onDelete('cascade');
+            $table->foreign('id_condominio')->references('id_condominio')->on('condominio');
+            $table->timestamps();
         });
     }
-
+    
     /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
+    * Reverse the migrations.
+    *
+    * @return void
+    */
     public function down()
     {
         Schema::dropIfExists('usuario');
