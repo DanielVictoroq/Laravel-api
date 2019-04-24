@@ -17,7 +17,12 @@
                         <input type="text" name="sobrenome" id = "sobrenome" class="form-control mb-2" placeholder="Sobrenome">
                         <input type="date" name="date" id = "date" class="form-control mb-2" placeholder="Data de Nascimento">
                         <input type="text" name="fone" id = "fone" class="form-control mb-2" placeholder="Telefone">
-                        <input type="text" name="n_apt" id = "n_apt" class="form-control mb-2" placeholder="Número do Apartamento">
+                        <select name="condominio" id="condominio" class="form-control">
+                            <option value="1">Nova Conquista</option>
+                        </select>
+                        <div hidden class="apt-show">
+                            <input type="text" name="n_apt" id = "n_apt" class="form-control mb-2" placeholder="Número do Apartamento">
+                        </div>
                         <button class = "btn btn-success mt-4 col-md-3" type="submit">Cadastrar</button>
                     </form>
                 </div>
