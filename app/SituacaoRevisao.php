@@ -4,26 +4,22 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Usuario extends Model
+class SituacaoRevisao extends Model
 {
-    protected $table = 'usuario';
+    protected $table = 'situacao_revisao';
 
     public $incrementing = false;
     
     protected $fillable = [
-        'nome_usuario', 'nome', 'sobrenome','id_tipo', 'telefone', 'data_nascimento','usuario'
+        'nome', 'ult_revisao', 'data_prox_revisao', 'id_condominio'
     ];
 
-    protected $primaryKey = 'nome_usuario';
+    protected $primaryKey = 'id_situacao';
 
     function user() {
         return $this->belongsTo('App\User','nome_usuario');
     }
     function admin() {
         return $this->belongsTo('App\Admin','nome_usuario');
-    }
-    public function predio()
-    {
-        return $this->belongsTo('App\Predio', 'id_condominio');
     }
 }

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Sistema de Condomínio</title>
-
     <script src="{{ url('js/app.js') }}" defer></script>
     <link href="{{ url('css/app.css') }}" rel="stylesheet">
 </head>
@@ -17,18 +16,8 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-                    Home 
+                    <i class="fas fa-home mr-2"></i> Principal 
                 </a>
-                @guest
-                @else
-                <a class="navbar-brand d-flex align-items-center ml-5" href="{{ url('/') }}">
-                    <i class="far fa-building mr-3"></i> Prédio 
-                </a>
-                
-                @if (Session::get('admin') == true)
-                @endif
-                
-                @endif
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,15 +41,17 @@
                             </a>
                             
                             <div class="dropdown-menu dropdown-menu-right headermenu" aria-labelledby="navbarDropdown">
-                                @if (Session::get('dados_login')->id_tipo == 'S')
-                                <a class="dropdown-item" href="{{route('adminRegister')}}"><i class="fas fa-hammer fa-2x"></i> Adicionar Serviço de Manutenção</a>
-                                <a class="dropdown-item" href="{{route('registerUser')}}"><i class="far fa-newspaper fa-2x"></i>Incluir Recado</a>
-                                <a class="dropdown-item" href="{{route('registerUser')}}"><i class="fas fa-home fa-2x"></i>Gerenciar Apartamentos</a>
+                                @if (Session::get('dados_login')->id_tipo == 'S' || Session::get('dados_login')->id_tipo == 'A')
+                                <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-hammer fa-2x"></i> Adicionar Serviço de Manutenção</a>
+                                <a class="dropdown-item" href="{{route('recados')}}"><i class="far fa-newspaper fa-2x"></i>Recados</a>
+                                <a class="dropdown-item" href="{{route('ocorrencias')}}"><i class="fas fa-exclamation-circle fa-2x"></i>Ocorrências</a>
+                                <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-home fa-2x"></i>Gerenciar Apartamentos</a>
                                 
                                 @else
-                                <a class="dropdown-item" href="{{route('adminRegister')}}"><i class="fas fa-exclamation-circle fa-2x"></i> Sinalizar Problema</a>
+                                <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-exclamation-circle fa-2x"></i> Sinalizar Problema</a>
                                 @endif
-                                <a class="dropdown-item" href="{{route('registerUser')}}"><i class="far fa-envelope fa-2x"></i>Mensagens</a>
+                                <a class="dropdown-item" href="{{route('predio')}}"><i class="far fa-building fa-2x"></i></i>Prédio</a>
+                                <a class="dropdown-item" href="{{route('predio')}}"><i class="far fa-envelope fa-2x"></i>Mensagens</a>
                                 <form id="logout-form" action="{{  route('logout') }}" method="GET" style="display: none;">
                                     @csrf
                                 </form>
@@ -69,6 +60,7 @@
                                 </a>
                             </div>
                         </li>
+                        
                         @endguest
                     </ul>
                 </div>

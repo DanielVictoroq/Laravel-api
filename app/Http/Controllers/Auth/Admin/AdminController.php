@@ -24,8 +24,8 @@ class AdminController extends Controller
         $this->registeruser = new RegisterController();
         $this->login = new LoginController();
     }
-    public function indexLogin(){
-        return view('auth.register',['user'=> 'adminRegister']);
+    public function index(){
+        return view('pages.home',['data'=> 'adminRegister']);
     }
     
     public function register(Request $request){

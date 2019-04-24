@@ -49262,7 +49262,8 @@ $(document).ready(function () {
       sobrenome: $('#sobrenome').val(),
       date: $('#date').val(),
       fone: $('#fone').val(),
-      tipo: $('#tipo').val()
+      tipo: $('#tipo').val(),
+      n_apt: $('#n_apt').val()
     };
     $.ajax({
       headers: {
@@ -49290,6 +49291,28 @@ $(document).ready(function () {
     $('.headermenu').removeClass('nav-link');
   }
 
+  $('.concluir-sin').click(function () {
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: baseurl + 'sindico-post',
+      data: {
+        sindico: $('#sindico').val()
+      },
+      method: 'POST',
+      dataType: 'json',
+      success: function success(data) {
+        if (data) {
+          $('.modal-title').text('Sucesso');
+          $('#modalsucesso').modal('show');
+        } else {
+          $('.modal-title').text('Nome de Usuário já existe');
+          $('#modalsucesso').modal('show');
+        }
+      }
+    });
+  });
   $('.fechar-modal').click(function () {
     window.location.href = baseurl + 'home';
   });

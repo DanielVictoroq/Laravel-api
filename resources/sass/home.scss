@@ -15,6 +15,12 @@
         border-bottom-left-radius: 3px;
     }
 }
+.card.nenhuma{
+    .card-body{
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+    }
+}
 #navbarDropdown{
     @media screen and (max-width:426px){
         display:none;
@@ -46,7 +52,7 @@
         }
     }
 }
-.total{
+.total, .condominio{
     height: 30px;
     font-size: 1.2rem;
     font-weight: bold;
@@ -54,6 +60,9 @@
     p{
         margin: 0;
     }
+}
+.condominio{
+    font-size: 1rem;
 }
 .footer-sistema{
     position: absolute;
