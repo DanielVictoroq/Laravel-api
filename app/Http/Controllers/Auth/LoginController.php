@@ -8,10 +8,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Usuario;
+use App\User;
+use App\Admin;
+use Session;
 
 class LoginController extends Controller
 {
     private $register;
+    
     
     public function __construct()
     {
@@ -22,57 +27,42 @@ class LoginController extends Controller
         return view('auth.login');
     }
     
-    public function registerGet(){
-        
-        return view('auth.register',['user'=> 'register']);
-
-    }
-    
-    public function forgotGet(){
-        return view('auth.passwords.reset');
-    }
-    
     public function authenticate(Request $request)
     {
         $remember = $request->only('remember');
-        $credentials = $request->only('name', 'password');
+        $credentials = $request->only('nome_usuario', 'password');
         
         if(Auth::guard('admin')->attempt($credentials)){
-            \Session::put('admin', true);
+            $this->inserirSessao('admin');
             return redirect()->route('home');
         }
         else if (Auth::attempt($credentials, $remember)) {
-            \Session::put('admin', false);
+            $this->inserirSessao('user');
             return redirect('/');
         }
         
         return redirect()->intended('home');
     }
     
-    public function register(Request $request){
-        
-        $data = $this->register->create($request);
-        
-        $credentials = $request->only('name', 'password');
-        
-        if (Auth::attempt($credentials)) {
-            \Session::put('admin', false);
-            return redirect()->intended('home');
+    public function inserirSessao($opcao){
+
+        if($opcao == 'admin'){
+            Session::put('admin', true);
+            $data =  json_decode(Admin::with('usuario')->get());
+            Session::put('dados_login',  $data[0]->usuario[0]);
         }
-        else{
-            return view('home');
+        else {
+            $data = json_decode(User::with('usuario')->get());
+            Session::put('dados_login', $data[0]->usuario[0]);
+            Session::put('admin', false);
         }
     }
-    
-    public function forgot(){
-        
-        return redirect('home');
-    }
+
     
     public function logout(){
         Auth::logout();
         Auth::guard('admin')->logout();
-        \Session::flush();
+        Session::flush();
         return redirect('/');
     }
 }

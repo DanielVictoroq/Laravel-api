@@ -4,11 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>{{ config('app.name', 'Laravel') }}</title>
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <title>Sistema de Condomínio</title>
+
+    <script src="{{ url('js/app.js') }}" defer></script>
+    <link href="{{ url('css/app.css') }}" rel="stylesheet">
 </head>
 <script>
     var baseurl =  "{{ env('APP_URL') }}";
@@ -17,23 +16,16 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                @if (Session::get('admin') == true)
-                <a class="navbar-brand" href="{{route('home')}}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+                    Home 
                 </a>
-                @else
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                @endif
                 @guest
                 @else
+                <a class="navbar-brand d-flex align-items-center ml-5" href="{{ url('/') }}">
+                    <i class="far fa-building mr-3"></i> Prédio 
+                </a>
                 
                 @if (Session::get('admin') == true)
-                <a class="navbar-brand" href="{{route('tabelaAdmin')}}">Tabela</a>
-                <a class="navbar-brand" href="{{route('criarJob')}}">Criar Job</a>
-                @else
-                <a class="navbar-brand" href="{{route('tabela')}}">Tabela</a>
                 @endif
                 
                 @endif
@@ -50,29 +42,30 @@
                         </li>
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ url('register') }}">{{ __('Register') }}</a>
+                            <a class="nav-link" href="{{ url('register') }}">Registrar</a>
                         </li>
                         @endif
                         @else
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown usuario-nav">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Session::get('dados_login')->nome.' '.Session::get('dados_login')->sobrenome}} <span class="caret"></span>
                             </a>
                             
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if (Session::get('admin') == true)
-                                <a class="dropdown-item" href="{{route('adminRegister')}}">Registrar Admin</a>
-                                <a class="dropdown-item" href="{{route('registerUser')}}">Registrar Usuário</a>
+                            <div class="dropdown-menu dropdown-menu-right headermenu" aria-labelledby="navbarDropdown">
+                                @if (Session::get('dados_login')->id_tipo == 'S')
+                                <a class="dropdown-item" href="{{route('adminRegister')}}"><i class="fas fa-hammer fa-2x"></i> Adicionar Serviço de Manutenção</a>
+                                <a class="dropdown-item" href="{{route('registerUser')}}"><i class="far fa-newspaper fa-2x"></i>Incluir Recado</a>
+                                <a class="dropdown-item" href="{{route('registerUser')}}"><i class="fas fa-home fa-2x"></i>Gerenciar Apartamentos</a>
                                 
-                                <form id="logout-form" action="{{  route('logoutAdmin') }}" method="GET" style="display: none;">
-                                    @csrf
-                                </form>
                                 @else
+                                <a class="dropdown-item" href="{{route('adminRegister')}}"><i class="fas fa-exclamation-circle fa-2x"></i> Sinalizar Problema</a>
+                                @endif
+                                <a class="dropdown-item" href="{{route('registerUser')}}"><i class="far fa-envelope fa-2x"></i>Mensagens</a>
                                 <form id="logout-form" action="{{  route('logout') }}" method="GET" style="display: none;">
                                     @csrf
                                 </form>
-                                @endif
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-sign-out-alt fa-2x"></i> Sair
                                 </a>
                             </div>
                         </li>
@@ -87,5 +80,14 @@
         </main>
         
     </div>
+    
+    <footer class="footer-sistema container-fluid">
+        <div class="container d-flex align-items-center justify-content-between text-white">
+            <a class="navbar-brand " href="{{ url('/') }}">
+                Sistema de Condomínio 
+            </a>
+            <p class="">@php echo date('Y');@endphp</p>
+        </div>
+    </footer>
 </body>
 </html>

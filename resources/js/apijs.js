@@ -1,31 +1,45 @@
 $(document).ready(function(){
-
+    
     $('#formRegistro').submit(function(e){
         e.preventDefault();
         var data = {
-            name: $('#name').val(),
+            nome_usuario: $('#nome_usuario').val(),
             email:$('#email').val(),
             password: $('#password').val(),
-            password_confirmation: $('#password-confirm').val(),
-
-            };
+            nome: $('#nome').val(),
+            sobrenome: $('#sobrenome').val(),
+            date: $('#date').val(),
+            fone: $('#fone').val(),
+            tipo: $('#tipo').val(),
+        };
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-            url: baseurl + 'register-user',
+            url: baseurl + 'register/post',
             data: data,
             method: 'POST',
+            dataType: 'json',
             success: function (data) {
                 if(data){
+                    $('.modal-title').text('Sucesso');
                     $('#modalsucesso').modal('show');
                 }
                 else{
-                    $('#modalsucesso').modal('hide');
+                    $('.modal-title').text('Nome de Usuário já existe');
+                    $('#modalsucesso').modal('show');
                 }
             }
         });
-
+        
     });
-
+    
+        if ($(window).width() < 426) {
+            $('.headermenu').addClass('nav-link');
+        }
+        else {
+            $('.headermenu').removeClass('nav-link');
+        }
+    
+    
     $('.fechar-modal').click(function(){
         window.location.href= baseurl+'home';
     });

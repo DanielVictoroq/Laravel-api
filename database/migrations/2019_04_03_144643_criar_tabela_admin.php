@@ -14,12 +14,11 @@ class CriarTabelaAdmin extends Migration
     public function up()
     {
         Schema::create('admins', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name', 100);
+            $table->string('nome_usuario', 100);
+            $table->primary('nome_usuario');
             $table->string('email', 100);
             $table->string('password', 60);
             $table->string('remember_token', 60);
-            $table->timestamps();
         });
     }
 
