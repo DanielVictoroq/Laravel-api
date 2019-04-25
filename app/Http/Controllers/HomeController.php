@@ -21,16 +21,14 @@ class HomeController extends Controller
         if(Auth::guard('admin')->check()){
             return redirect()->route('getSindico');
         }
-
-        $cred = Auth::user();
-        $data = json_decode(User::with('usuario', 'apartamento')->find($cred->nome_usuario));
-        $sessao = $this->setarSessao($data);
-
-        return view('pages.home', ['data' => $data->apartamento[0]]);
+        
+        $sessao = $this->setarSessao();
+        
+        return view('pages.home', ['data' => $sessao]);
     }
-
-    public function setarSessao($data){
-
+    
+    public function setarSessao(){
+        $data = json_decode(User::with('usuario', 'apartamento')->find(Session::get('dados_login')->nome_usuario));
         $sindico = Usuario::where('id_tipo', '=', 'S')->get();
         $condominio = json_decode(Predio::find($data->usuario[0]->id_condominio));
         $ocorrencias = json_decode(Ocorrencia::where('id_condominio', '=', $data->usuario[0]->id_condominio)->get());
@@ -39,9 +37,9 @@ class HomeController extends Controller
         Session::put('predio', $condominio);
         Session::put('ocorrencias', $ocorrencias);
         Session::put('recados', $recados);
-        
+        return $data->apartamento[0];
     }
-
+    
     public function forgot(){
         return redirect('pages.home');
     }

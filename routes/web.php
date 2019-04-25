@@ -21,7 +21,9 @@ Route::group(['prefix' => 'forgot-password'], function() {
 Route::group(['middleware' => ['auth']], function () { 
     Route::get('/predio', 'PredioController@index')->name('predio');
     Route::get('/ocorrencias', 'PredioController@indexOcorrencias')->name('ocorrencias');
-    Route::get('/recados', 'PredioController@indexRecados')->name('recados');
+    Route::get('/recados', 'PredioController@indexRecados')->name('getRecados');
+    Route::post('/post-recados', 'PredioController@criarRecados')->name('postRecados');
+    Route::post('/excluir-recado', 'PredioController@excluirRecados')->name('exRecados');
 });
 
 Route::group(['middleware' => ['auth:admin']], function () { 

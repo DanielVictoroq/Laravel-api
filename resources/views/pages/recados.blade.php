@@ -6,6 +6,12 @@
     <h1 class="text-center mt-5">Administração de Recados</h1>
     
     <div class="col-md-6 float-left recado_div">
+        <div class="alert alert-success excl-recado-success" role="alert">
+            Recado Excluido com sucesso!
+        </div>
+        <div class="alert alert-danger excl-recado-danger" role="alert">
+            Erro ao excluir recado!
+        </div>
         <table class="table table-bordered ">
             <thead>
                 <tr  class="text-center">
@@ -17,30 +23,42 @@
             <tbody>
                 @if(Session::get('recados'))
                 @foreach(Session::get('recados') as $item)
-                <tr  class="text-center">
+                <tr class="text-center">
                     <th scope="row" >{{$item->titulo}}</th>
                     <td>{{$item->comunicado}}</td>
-                    <td ><a href="" class="text-danger exc-recado"><i class="far fa-trash-alt fa-2x "></i></a></td>
+                    <td >
+                        <form class="exc-recado" action="{{route('postRecados')}}">
+                            <button type="submit" class="btn-rec" data-rec="{{$item->id_comunicado}}"><i class="far fa-trash-alt fa-2x text-danger"></i></button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
                 @else
-                <div class="nenhuma mt-3">
-                    <h5 class="card-text">Nenhum recado</h5>
-                </div>   
+                <tr class="table-empty text-center">
+                    <td colspan="3">Nenhum Recado</td>
+                    
+                </tr>
                 @endif
             </tbody>
         </table>
     </div>
+    
     <div class="offset-md-1 col-md-5 recado_div float-left">
+        <div class="alert alert-success criar-recado-success" role="alert">
+            Recado criado com sucesso!
+        </div>
+        <div class="alert alert-danger criar-recado-danger" role="alert">
+            Erro ao criar recado!
+        </div>
         <h2>Novo Recado</h2>
-        <form id="formRecado" class="mt-4">
+        <form id="formRecado" class="mt-4" method="post">
             <div class="form-group">
-                <label for="exampleInputEmail1">Titulo</label>
-                <input type="text" class="form-control" id="titulorecado"  placeholder="Titulo">
+                <label for="titulorecado">Titulo</label>
+                <input type="text" class="form-control" id="titulorecado" name="titulorecado"  placeholder="Titulo">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Recado</label>
-                <textarea class="form-control" id="recado" placeholder="Recado"></textarea>
+                <label for="recado">Recado</label>
+                <textarea class="form-control" id="recado" name="recado" placeholder="Recado"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Concluir Recado</button>
         </form>

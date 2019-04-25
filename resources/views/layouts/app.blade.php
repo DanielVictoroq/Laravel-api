@@ -43,7 +43,7 @@
                             <div class="dropdown-menu dropdown-menu-right headermenu" aria-labelledby="navbarDropdown">
                                 @if (Session::get('dados_login')->id_tipo == 'S' || Session::get('dados_login')->id_tipo == 'A')
                                 <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-hammer fa-2x"></i> Adicionar Serviço de Manutenção</a>
-                                <a class="dropdown-item" href="{{route('recados')}}"><i class="far fa-newspaper fa-2x"></i>Recados</a>
+                                <a class="dropdown-item" href="{{route('getRecados')}}"><i class="far fa-newspaper fa-2x"></i>Recados</a>
                                 <a class="dropdown-item" href="{{route('ocorrencias')}}"><i class="fas fa-exclamation-circle fa-2x"></i>Ocorrências</a>
                                 <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-home fa-2x"></i>Gerenciar Apartamentos</a>
                                 
