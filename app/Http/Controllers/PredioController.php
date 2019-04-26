@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Session;
+use App\Predio;
+use App\Comunicado;
+use App\ServicoAdicional;
 use Illuminate\Http\Request;
 use App\Http\Controllers\HomeController;
-use App\Predio;
-use App\ServicoAdicional;
-use App\Comunicado;
-use Session;
 
 class PredioController extends Controller
 {
@@ -19,16 +19,76 @@ class PredioController extends Controller
     }
     
     public function index(){
-        $data = json_decode(Predio::find(Session::get('predio')->id_condominio));
-        $servico = json_decode(ServicoAdicional::where('id_condominio','=',Session::get('predio')->id_condominio)->get());
-        return view('pages.predio', ['data'=> $data, 'servico' => $servico]);
+        $servico = json_decode(
+            ServicoAdicional::where('id_condominio','=',Session::get('predio')->id_condominio)
+            ->get()
+        );
+        
+        if(date('d') == 10 && !Session::get('caixa')){
+            Session::put('caixa', true);
+            $ret = Predio::find(Session::get('predio')->id_condominio);
+            $ret->vlr_caixa -= Session::get('predio')->vlr_total;
+            if($ret->save()){
+                $this->homeController->setarSessao();    
+            }
+        }
+        return view('pages.predio', ['data'=> Session::get('predio'), 'servico' => $servico]);
+    }
+    
+    public function gerenciarPredio(){
+        $this->homeController->setarSessao();
+        return view('pages.gerencia-predio');
+    }
+    
+    public function registrarAlteracoes(Request $request){
+        
+        $condominio = str_replace(',', '.',$request->input('condominio'));
+        $agua = str_replace(',', '.',$request->input('agua'));
+        $luz = str_replace(',', '.',$request->input('luz'));
+        $faxina = str_replace(',', '.',$request->input('faxina'));
+        $elevador = str_replace(',', '.',$request->input('elevador'));
+        $caixa = str_replace(',', '.',$request->input('caixa'));
+        
+        $servico = json_decode(
+            ServicoAdicional::where('id_condominio','=',Session::get('predio')->id_condominio)
+            ->get()
+        );
+        
+        $valorservicos = 0;
+        $valorcaixa = 0;
+        foreach($servico as $item){
+            $valorservicos += $item->vlr_servico/ $item->meio_pgt;
+        }
+        
+        $valortotal = $valorservicos + $agua + $luz + $faxina + $elevador;
+        
+        $ret = Predio::find(Session::get('predio')->id_condominio);
+        $ret->fill([
+            'valor_cond' => $condominio,
+            'vlr_agua'   => $agua,
+            'vlr_luz'    => $luz,
+            'faxina'     => $faxina,
+            'elevador'   => $elevador,
+            'vlr_total'  => $valortotal, 
+            'vlr_caixa'  => $caixa
+            ]
+        );
+        
+        if($ret->save()){
+            $this->homeController->setarSessao();
+            return json_encode(true);
+        }
+        else{
+            return json_encode(false);
+        }
+        
     }
     
     public function indexRecados(){
         $this->homeController->setarSessao();
         return view('pages.recados');
     }
-
+    
     public function criarRecados(Request $request){
         $recado = new Comunicado();
         $recado->fill([

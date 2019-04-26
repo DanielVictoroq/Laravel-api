@@ -1,42 +1,45 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+
+use Session;
 use App\User;
 use App\Predio;
 use App\Usuario;
-use App\Comunicado;
-use App\Ocorrencia;
-use Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     
     public function index()
     {
-        if (!Auth::check() && !Auth::guard('admin')->check() ){
+        if (!Auth::check()){
             return redirect('/login');
         }
-        if(Auth::guard('admin')->check()){
-            return redirect()->route('getSindico');
-        }
-        
         $sessao = $this->setarSessao();
-        
         return view('pages.home', ['data' => $sessao]);
     }
     
     public function setarSessao(){
-        $data = json_decode(User::with('usuario', 'apartamento')->find(Session::get('dados_login')->nome_usuario));
-        $sindico = Usuario::where('id_tipo', '=', 'S')->get();
-        $condominio = json_decode(Predio::find($data->usuario[0]->id_condominio));
-        $ocorrencias = json_decode(Ocorrencia::where('id_condominio', '=', $data->usuario[0]->id_condominio)->get());
-        $recados = json_decode(Comunicado::where('id_condominio', '=', $data->usuario[0]->id_condominio)->get());
+        $cred = Auth::user();
+        $data = json_decode(
+            User::with('usuario.predio.ocorrencia','usuario.predio.comunicado', 'apartamento')
+            ->find($cred->nome_usuario)
+        );
+
+        $sindico = json_decode(
+            Usuario::where('id_tipo', '=', 'S')
+            ->where('id_condominio','=', $data->usuario[0]->id_condominio)
+            ->get()
+        );
+        
+        Session::put('dados_login',  $data->usuario[0]);
         Session::put('sindico', $sindico[0]);
-        Session::put('predio', $condominio);
-        Session::put('ocorrencias', $ocorrencias);
-        Session::put('recados', $recados);
+        Session::put('predio', $data->usuario[0]->predio);
+        Session::put('ocorrencias', $data->usuario[0]->predio->ocorrencia);
+        Session::put('recados', $data->usuario[0]->predio->comunicado);
+        
         return $data->apartamento[0];
     }
     
@@ -45,7 +48,9 @@ class HomeController extends Controller
     }
     
     public function registerGet(){
-        return view('auth.register',['user'=> 'register/post']);   
+        $data = json_decode(Predio::all());
+        
+        return view('auth.register',['data' => $data]);   
     }
     
     public function forgotGet(){

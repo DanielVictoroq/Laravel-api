@@ -12,7 +12,8 @@
         <div class="alert alert-danger excl-recado-danger" role="alert">
             Erro ao excluir recado!
         </div>
-        <table class="table table-bordered ">
+        <h2>Recados</h2>
+        <table class="table table-bordered mt-4">
             <thead>
                 <tr  class="text-center">
                     <th scope="col">Titulo</th>

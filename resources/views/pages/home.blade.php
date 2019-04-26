@@ -1,9 +1,11 @@
+
 @extends('layouts.app')
 
 @section('content')
 
-<div class="container">
+<div class="container mb-auto">
     <div class="row justify-content-center">
+    <h1 class="col-md-12 text-center mt-4 mb-4">Condomínio {{Session::get('predio')->nome_cond}}</h1>
         <div class="col-md-5 mt-5">
             <h2>Detalhes <strong class="float-right">Apt {{$data->n_apt}}</strong></h2>
             <table class="table table-bordered mt-3">
@@ -15,7 +17,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{number_format($data->med_gas,2,',','.')}}</td>
+                        <td>{{$data->med_gas}}</td>
                         <td>R$ {{number_format($data->vlr_gas,2,',','.')}}</td>
                     </tr>
                 </tbody>
@@ -29,7 +31,7 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{{number_format($data->med_agua,2,',','.')}}</td>
+                        <td>{{$data->med_agua}}</td>
                         <td>R$ {{number_format($data->vlr_agua,2,',','.')}}</td>
                     </tr>
                 </tbody>
@@ -38,7 +40,7 @@
                 <p>Condomínio</p><span>R$ {{number_format(Session::get('predio')->valor_cond,2,',','.')}}</span>
             </div>
             <div class="total mt-4 d-flex align-items-center justify-content-between">
-                <p class="d-block">TOTAL</p><span class="text-danger">R$ {{number_format($data->vlr_total,2,',','.')}}</span>
+                <p class="d-block">TOTAL A PAGAR</p><span class="text-danger">R$ {{number_format($data->vlr_total,2,',','.')}}</span>
             </div>
         </div>
         <div class="col-md-6  offset-md-1 mt-5">

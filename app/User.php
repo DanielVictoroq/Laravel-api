@@ -28,7 +28,7 @@ class User extends Authenticatable
     
     public function usuario()
     {
-        return $this->hasMany('App\Usuario', 'usuario');
+        return $this->hasMany('App\Usuario',  'usuario');
     }
     public function apartamento()
     {

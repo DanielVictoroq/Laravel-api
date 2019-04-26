@@ -21,7 +21,6 @@ h5 {
 }
 
 #sindico {
-  width: 250px;
   height: 40px;
   color: #555;
   font-weight: bold;
@@ -102,7 +101,7 @@ h5 {
 
 .footer-sistema {
   position: absolute;
-  bottom: 0;
+  bottom: -45px;
   height: 60px;
   background: #2e77ab;
 }
@@ -131,17 +130,17 @@ h5 {
   }
 }
 
+.reg-sindico-success,
+.reg-sindico-danger {
+  display: none;
+}
+
 .card .card-body.login {
-  padding: 4rem 0;
+  padding: 4rem 1rem;
 }
 
 .recado_div {
   margin-top: 70px;
-}
-
-.recado_div .btn-rec {
-  background: none;
-  border: none;
 }
 
 .recado_div .excl-recado-success,
@@ -149,6 +148,28 @@ h5 {
 .recado_div .criar-recado-success,
 .recado_div .criar-recado-danger {
   display: none;
+}
+
+.btn-rec {
+  background: none;
+  border: none;
+}
+
+.input-cad label {
+  width: 150px;
+}
+
+.ocorrencias .excl-oc-success,
+.ocorrencias .excl-oc-danger,
+.ocorrencias .criar-oc-danger,
+.ocorrencias .criar-oc-success {
+  display: none;
+}
+
+.gerencia-pred .input-cad label {
+  width: 170px;
+  text-align: right;
+  margin-right: 10px;
 }
 
 /*!
