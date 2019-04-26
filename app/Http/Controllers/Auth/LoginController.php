@@ -2,25 +2,25 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Auth\RegisterController;
-
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-use App\Usuario;
-use App\User;
-use App\Admin;
 use Session;
+use App\User;
+use App\Usuario;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
 {
     private $register;
-    
+    private $homeController;
     
     public function __construct()
     {
         $this->register = new RegisterController();
+        $this->homeController = new HomeController();
     }
     
     public function index(){
@@ -32,38 +32,22 @@ class LoginController extends Controller
         $remember = $request->only('remember');
         $credentials = $request->only('nome_usuario', 'password');
         
-        if(Auth::guard('admin')->attempt($credentials)){
-            $this->inserirSessao('admin');
-            return redirect()->route('homeadmin');
-        }
-        else if (Auth::attempt($credentials, $remember)) {
-            $this->inserirSessao('user');
+        if (Auth::attempt($credentials, $remember)) {
+            $this->inserirSessao();
             return redirect('/');
         }
         
         return redirect()->intended('home');
     }
     
-    public function inserirSessao($opcao){
-        
-        if($opcao == 'admin'){
-            $cred = Auth::guard('admin')->user();
-            Session::put('admin', true);
-            $data = Usuario::find($cred->nome_usuario)->get();
-            Session::put('dados_login',  $data[0]);
-        }
-        else {
-            $cred = Auth::user();
-            $data = Usuario::find($cred->nome_usuario)->get();
-            Session::put('dados_login',  $data[0]);
-            Session::put('admin', false);
-        }
+    public function inserirSessao(){
+        $cred = Auth::user();
+        $data = json_decode(Usuario::find($cred->nome_usuario));
+        $this->homeController->setarSessao();
     }
-    
     
     public function logout(){
         Auth::logout();
-        Auth::guard('admin')->logout();
         Session::flush();
         return redirect('/');
     }

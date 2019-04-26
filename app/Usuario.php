@@ -11,7 +11,7 @@ class Usuario extends Model
     public $incrementing = false;
     
     protected $fillable = [
-        'nome_usuario', 'nome', 'sobrenome','id_tipo', 'telefone', 'data_nascimento','usuario'
+        'nome_usuario', 'nome', 'sobrenome','id_tipo', 'telefone', 'data_nascimento','usuario', 'id_condominio'
     ];
 
     protected $primaryKey = 'nome_usuario';

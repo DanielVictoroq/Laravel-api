@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Auth\Admin;
 
-use App\Admin;
 use App\User;
+use App\Admin;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Auth\Admin\AdminRegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Auth\Admin\AdminRegisterController;
 
 class AdminController extends Controller
 {

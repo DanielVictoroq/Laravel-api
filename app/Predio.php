@@ -18,5 +18,11 @@ class Predio extends Model
     function usuario() {
         return $this->hasMany('App\Usuario','id_condominio');
     }
+    function ocorrencia(){
+        return $this->hasMany('App\Ocorrencia', 'id_condominio');
+    }
+    function comunicado(){
+        return $this->hasMany('App\Comunicado', 'id_condominio');
+    }
 
 }

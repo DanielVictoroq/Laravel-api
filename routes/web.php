@@ -20,16 +20,14 @@ Route::group(['prefix' => 'forgot-password'], function() {
 
 Route::group(['middleware' => ['auth']], function () { 
     Route::get('/predio', 'PredioController@index')->name('predio');
+    Route::get('/gerencia-predio', 'PredioController@gerenciarPredio')->name('predioGer');
+    Route::post('/alteracoes', 'PredioController@registrarAlteracoes')->name('alteracoesPredio');
     Route::get('/ocorrencias', 'PredioController@indexOcorrencias')->name('ocorrencias');
-    Route::get('/recados', 'PredioController@indexRecados')->name('recados');
-});
-
-Route::group(['middleware' => ['auth:admin']], function () { 
-    Route::get('/home', 'HomeController@index')->name('homeadmin');
+    Route::get('/recados', 'PredioController@indexRecados')->name('getRecados');
+    Route::post('/post-recados', 'PredioController@criarRecados')->name('postRecados');
+    Route::post('/excluir-recado', 'PredioController@excluirRecados')->name('exRecados');
     Route::get('/sindico', 'UsuarioController@getSindico')->name('getSindico');
-    Route::get('/logout-admin','Auth\LoginController@logout')->name('logoutAdmin');
     Route::post('/sindico-post', 'UsuarioController@definirSindico')->name('Postsindico');
 });
-
 
 Route::get('/logout','Auth\LoginController@logout')->name('logout');

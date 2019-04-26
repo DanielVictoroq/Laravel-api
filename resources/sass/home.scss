@@ -64,9 +64,10 @@
 .condominio{
     font-size: 1rem;
 }
+
 .footer-sistema{
-    position: absolute;
-    bottom: 0;
+    position:absolute;
+    bottom:-45px;
     height: 60px;
     background: #2e77ab;
     div{
@@ -86,4 +87,8 @@
     @media screen and (max-width: 768px){
         position: relative;
     }
+}
+
+.reg-sindico-success, .reg-sindico-danger{
+    display:none;
 }

@@ -41,14 +41,14 @@
                             </a>
                             
                             <div class="dropdown-menu dropdown-menu-right headermenu" aria-labelledby="navbarDropdown">
-                                @if (Session::get('dados_login')->id_tipo == 'S' || Session::get('dados_login')->id_tipo == 'A')
+                                @if (Session::get('dados_login')->id_tipo == 'S')
                                 <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-hammer fa-2x"></i> Adicionar Serviço de Manutenção</a>
-                                <a class="dropdown-item" href="{{route('recados')}}"><i class="far fa-newspaper fa-2x"></i>Recados</a>
+                                <a class="dropdown-item" href="{{route('getRecados')}}"><i class="far fa-newspaper fa-2x"></i>Recados</a>
                                 <a class="dropdown-item" href="{{route('ocorrencias')}}"><i class="fas fa-exclamation-circle fa-2x"></i>Ocorrências</a>
                                 <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-home fa-2x"></i>Gerenciar Apartamentos</a>
-                                
+                                <a class="dropdown-item" href="{{route('getSindico')}}"><i class="fas fa-user-tie fa-2x"></i>Definir novo Síndico</a>
                                 @else
-                                <a class="dropdown-item" href="{{route('predio')}}"><i class="fas fa-exclamation-circle fa-2x"></i> Sinalizar Problema</a>
+                                <a class="dropdown-item" href="{{route('ocorrencias')}}"><i class="fas fa-exclamation-circle fa-2x"></i> Sinalizar Problema</a>
                                 @endif
                                 <a class="dropdown-item" href="{{route('predio')}}"><i class="far fa-building fa-2x"></i></i>Prédio</a>
                                 <a class="dropdown-item" href="{{route('predio')}}"><i class="far fa-envelope fa-2x"></i>Mensagens</a>
@@ -70,9 +70,7 @@
         <main class="py-4">
             @yield('content')
         </main>
-        
-    </div>
-    
+    </div>    
     <footer class="footer-sistema container-fluid">
         <div class="container d-flex align-items-center justify-content-between text-white">
             <a class="navbar-brand " href="{{ url('/') }}">

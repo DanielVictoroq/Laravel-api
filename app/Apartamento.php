@@ -14,7 +14,7 @@ class Apartamento extends Model
         'n_apt', 'responsavel', 'vlr_agua','vlr_gas', 'med_agua', 'med_gas','vlr_total'
     ];
 
-    protected $primaryKey = 'n_apt';
+    protected $primaryKey = 'id_apartamento';
 
     function user() {
         return $this->belongsTo('App\User','nome_usuario');

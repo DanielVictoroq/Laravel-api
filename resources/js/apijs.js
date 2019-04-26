@@ -12,6 +12,7 @@ $(document).ready(function(){
             fone: $('#fone').val(),
             tipo: $('#tipo').val(),
             n_apt: $('#n_apt').val(),
+            condominio: $('#condominio').val(),
         };
         $.ajax({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
@@ -49,12 +50,18 @@ $(document).ready(function(){
             dataType: 'json',
             success: function (data) {
                 if (data) {
-                    $('.modal-title').text('Sucesso');
-                    $('#modalsucesso').modal('show');
+                    $('.reg-sindico-danger').hide();
+                    $('.reg-sindico-success').show();
+                    setTimeout(function () {
+                        location.reload();
+                    }, 3000)
                 }
                 else {
-                    $('.modal-title').text('Nome de Usuário já existe');
-                    $('#modalsucesso').modal('show');
+                    $('.reg-sindico-success').hide();
+                    $('.reg-sindico-danger').show();
+                    setTimeout(function () {
+                        $('.reg-sindico-danger').hide();
+                    }, 3000)
                 }
             }
         });

@@ -18,4 +18,9 @@ class Ocorrencia extends Model
     function user() {
         return $this->belongsTo('App\User','nome_usuario');
     }
+    function predio(){
+        
+        return $this->belongsTo('App\Predio', 'id_condominio');
+        
+    }
 }

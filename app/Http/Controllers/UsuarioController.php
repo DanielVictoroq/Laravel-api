@@ -1,16 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use Session;
+use App\User;
+use App\Predio;
+use App\Usuario;
+use App\Apartamento;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
-use App\Usuario;
-use App\User;
-use App\Apartamento;
 
 class UsuarioController extends Controller
 {
+    private $homeController;
+    
+    public function __construct(HomeController $homeController){
+        
+        $this->homeController = $homeController;
+    }
+    
     public function novo(Request $request)
     {
         $usuario = [
@@ -24,6 +35,7 @@ class UsuarioController extends Controller
             "email" => $request->input('email'),
             "password" => $request->input('password'),
             "n_apt" => $request->input('n_apt'),
+            "id_condominio" => $request->input('condominio'),
             "remember" => $request->only('remember'),
         ];
         
@@ -41,7 +53,11 @@ class UsuarioController extends Controller
     }
     
     public function getSindico(){
-        $data = Usuario::all();
+        if(Session::get('dados_login')->id_tipo == 'M'){
+            return redirect('/');
+        }
+        $data = Usuario::all()
+        ->where('id_condominio', '=', Session::get('predio')->id_condominio);
         $sindico = '';
         foreach($data as $item)
         {
@@ -49,23 +65,33 @@ class UsuarioController extends Controller
                 $sindico = $item->nome.' '.$item->sobrenome;
             }
         }   
+        $this->homeController->setarSessao();
         return view('admin.sindico', ['data' => json_decode($data), 'sindico' => $sindico]);
         
     }
     public function definirSindico(Request $request){
-
+        
         $novo = $request->input('sindico');
-
-        $antsindico = Usuario::where('id_tipo', '=', 'S')->update(['id_tipo' => 'M']);
-
+        
+        $antsindico = Usuario::where('id_tipo', '=', 'S')
+        ->where('id_condominio','=',Session::get('predio')->id_condominio)
+        ->update(['id_tipo' => 'M']);
+        
         $novosindico = Usuario::find($novo);
+        $predio = Predio::where('id_condominio', '=', $novosindico->id_condominio)
+        ->update(
+            ['sindico_atual' =>$novosindico->nome_usuario]
+        );
+        
         $novosindico->id_tipo = 'S';
-        $novosindico->save();
-
-        return json_encode(true);
-
+        if($novosindico->save()){
+            $this->homeController->setarSessao();
+            return json_encode(true);
+        }
+        return json_encode(false);
+        
+        
     }
-    
     
     public function validator($data)
     {
@@ -101,6 +127,7 @@ class UsuarioController extends Controller
                 'data_nascimento' => $data['data_nascimento'],
                 'telefone' => $data['telefone'],
                 'usuario' => $data['usuario'],
+                'id_condominio'=> $data['id_condominio']
                 ]
             );
             $usuario->save();
