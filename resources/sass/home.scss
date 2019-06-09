@@ -1,0 +1,94 @@
+.card.bg-primary{
+    
+    border: 1px solid #3490dc;
+    .card-header{
+        background-color: #3490dc;
+        color:white;
+    }
+    
+}
+.card{
+    .card-body{
+        background-color: white;
+        color: #555555;
+        border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+}
+.card.nenhuma{
+    .card-body{
+        border-top-right-radius: 3px;
+        border-top-left-radius: 3px;
+    }
+}
+#navbarDropdown{
+    @media screen and (max-width:426px){
+        display:none;
+    }
+}
+.navbar-laravel {
+    background-color: #2e77ab;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    .navbar-brand, .nav-link{
+        color:white !important;
+    }
+    .navbar-brand{
+        i{
+            font-size: 25px;
+        }
+    }
+}
+
+.tr{
+    line-height: 4;
+    td{
+        .dropdown-menu{
+            line-height: 2;
+        }
+        button{
+            &:focus{
+                box-shadow: none;
+            }
+        }
+    }
+}
+.total, .condominio{
+    height: 30px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    p{
+        margin: 0;
+    }
+}
+.condominio{
+    font-size: 1rem;
+}
+
+.footer-sistema{
+    position:absolute;
+    bottom:-45px;
+    height: 60px;
+    background: #2e77ab;
+    div{
+        height: 100%;
+        a{
+            color: white !important;
+            font-size: 1.125rem;
+            &:hover{
+                color: white !important;
+            }
+        }
+        p{
+            margin: 0;
+            font-size: 1.125rem;
+        }
+    }
+    @media screen and (max-width: 768px){
+        position: relative;
+    }
+}
+
+.reg-sindico-success, .reg-sindico-danger{
+    display:none;
+}

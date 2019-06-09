@@ -1,42 +1,60 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Auth;
+
+use Session;
+use App\User;
+use App\Predio;
+use App\Usuario;
 use Illuminate\Http\Request;
-use App\Http\Controllers\JobsController;
+use Illuminate\Support\Facades\Auth;
+
 class HomeController extends Controller
 {
     
-    private $jobs;
-    
-    public function __construct(JobsController $jobs){
-        $this->jobs = $jobs;
-    }
     public function index()
     {
-        return view('home');
-    }    
-    
-    public function tabelafu(){
-        $jobs = $this->jobs->index();
-        $jobs = $jobs->getData();
-
-        return view('tabela', ['jobs' => $jobs ]);
+        if (!Auth::check()){
+            return redirect('/login');
+        }
+        $sessao = $this->setarSessao();
+        return view('pages.home', ['data' => $sessao]);
     }
     
-    public function inserirJobs(Request $request){
-        $jobs = $this->jobs->store($request);
+    public function setarSessao(){
+        $cred = Auth::user();
+        $data = json_decode(
+            User::with('usuario.predio.ocorrencia','usuario.predio.comunicado', 'apartamento')
+            ->find($cred->nome_usuario)
+        );
 
-        return redirect('tabela');  
-    }
-    public function criarJob(Request $request){
-        return view('job');
+        $sindico = json_decode(
+            Usuario::where('id_tipo', '=', 'S')
+            ->where('id_condominio','=', $data->usuario[0]->id_condominio)
+            ->get()
+        );
+        
+        Session::put('dados_login',  $data->usuario[0]);
+        Session::put('sindico', $sindico[0]);
+        Session::put('predio', $data->usuario[0]->predio);
+        Session::put('ocorrencias', $data->usuario[0]->predio->ocorrencia);
+        Session::put('recados', $data->usuario[0]->predio->comunicado);
+        
+        return $data->apartamento[0];
     }
     
-    public function excluirJob(Request $request){
-        $id = $request->input('id');
-        $ret = $this->jobs->destroy($id);
-
-        return redirect('tabela'); 
+    public function forgot(){
+        return redirect('pages.home');
     }
+    
+    public function registerGet(){
+        $data = json_decode(Predio::all());
+        
+        return view('auth.register',['data' => $data]);   
+    }
+    
+    public function forgotGet(){
+        return view('auth.passwords.reset');
+    }
+    
 }

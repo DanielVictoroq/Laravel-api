@@ -32,3 +32,6 @@ const app = new Vue({
     el: '#app'
 });
 require('./apijs')
+require('./components/recados')
+require('./components/gerencia-predio')
+require('../../node_modules/jquery-mask-plugin/dist/jquery.mask.min.js')
