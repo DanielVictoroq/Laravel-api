@@ -27,15 +27,16 @@ class HomeController extends Controller
             User::with('usuario.predio.ocorrencia','usuario.predio.comunicado', 'apartamento')
             ->find($cred->nome_usuario)
         );
-
         $sindico = json_decode(
             Usuario::where('id_tipo', '=', 'S')
             ->where('id_condominio','=', $data->usuario[0]->id_condominio)
             ->get()
         );
+        if($sindico){
+            Session::put('sindico', $sindico[0]);
+        }
         
         Session::put('dados_login',  $data->usuario[0]);
-        Session::put('sindico', $sindico[0]);
         Session::put('predio', $data->usuario[0]->predio);
         Session::put('ocorrencias', $data->usuario[0]->predio->ocorrencia);
         Session::put('recados', $data->usuario[0]->predio->comunicado);

@@ -15,7 +15,7 @@ class CreateApartamentos extends Migration
     {
         Schema::create('apartamentos', function (Blueprint $table) {
             $table->bigIncrements('id_apartamento');
-            $table->integer('n_apt',10);
+            $table->integer('n_apt');
             $table->string('responsavel', 100);
             $table->float('vlr_agua', 100)->default(0);
             $table->float('vlr_gas', 100)->default(0);

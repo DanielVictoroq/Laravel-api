@@ -17,7 +17,7 @@ class CreateSituacaoRevisao extends Migration
             $table->bigIncrements('id_situacao');
             $table->string('nome', 50);
             $table->date('ult_revisao');
-            $table->int('id_condominio', 10);
+            $table->bigInteger('id_condominio')->unsigned();
             $table->foreign('id_condominio')->references('id_condominio')->on('condominio');
             $table->date('data_prox_revisao');
             $table->timestamps(); 

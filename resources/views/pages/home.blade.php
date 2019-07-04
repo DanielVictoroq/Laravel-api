@@ -43,7 +43,7 @@
                 <p class="d-block">TOTAL A PAGAR</p><span class="text-danger">R$ {{number_format($data->vlr_total,2,',','.')}}</span>
             </div>
         </div>
-        <div class="col-md-6  offset-md-1 mt-5">
+        <div class="col-md-6 offset-md-1 mt-5">
             <h2>Ocorrências</h2>
             @if(Session::get('ocorrencias'))
             @foreach(Session::get('ocorrencias') as $item)

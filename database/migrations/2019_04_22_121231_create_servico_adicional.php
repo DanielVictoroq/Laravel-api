@@ -18,9 +18,9 @@ class CreateServicoAdicional extends Migration
             $table->string('tipo_servico', 50);
             $table->string('descricao', 255);
             $table->float('vlr_servico');
-            $table->int('meio_pgt',10);
-            $table->int('pagamento', 10);
-            $table->int('id_condominio', 10);
+            $table->integer('meio_pgt');
+            $table->integer('pagamento');
+            $table->bigInteger('id_condominio')->unsigned();
             $table->foreign('id_condominio')->references('id_condominio')->on('condominio');
             $table->timestamps();
         });
